@@ -1,9 +1,4 @@
 
-inspect_all<-function(df,uuid.column.name = NULL){
-
-
-}
-
 #' Check the dataset for duplicates in a variable.
 #'
 #' @param data a dataframe
@@ -44,7 +39,10 @@ find_duplicates_uuid <- function (data) {
   if(!is.data.frame(data))stop("first input must be a data frame. Use typeof(data) to find out what you have instead") #ensure first input is a dataframe
   ### find uuid column and check it is a single value
 uuid.name <- grep("uuid", names(data), value = T)
-if(length(uuid.name) == 0){stop("Could not find the uuid automatically in the dataset. Please use find_duplicates instead and give it the name of the uuid column")}
+if(length(uuid.name) == 0){
+  warning("Could not find the uuid automatically in the dataset. Please provide the name of the uuid column as a parameter for find_duplicates()")
+  return(empty_issues_table())
+  }
 if(length(uuid.name) > 1){uuid.name <- uuid.name[1]}
 
 return(find_duplicates(data, uuid.name))

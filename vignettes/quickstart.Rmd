@@ -1,5 +1,5 @@
 ---
-title: "Detailed Example"
+title: "Quickstart"
 author: "Eliora Henzler"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -19,67 +19,29 @@ knitr::opts_chunk$set(
 
 ```{r, results='hide', message=FALSE,warning=FALSE,error=FALSE}
 library("cleaninginspectoR")
-# library("dplyr")
-# library("questionr")
-# library("reshape2")
 ```
 
-# Generating a fake data frame 
+
+## Example data frame
+For illustration purposes
 ```{r}
-data <- data.frame(a= c(runif(99),7287),
+testdf <- data.frame(a= c(runif(98),7287,-100),
                    b=sample(letters,100,T),
                    uuid=c(1:98, 4,20),
-                   water.source.other = c(rep(NA,98),"beer","neighbour' well"),
+                   water.source.other = c(rep(NA,98),"neighbour's well","neighbour's well"),
                    GPS.lat = runif(100)
                    )
 ```
 
-## Finding duplicates in the data 
+## Apply all cleaning inspections
 
-### Generic version with column name
-
-```{r,eval=F}
-find_duplicates(data, duplicate.column.name = "uuid")
-```
-```{r,echo=F}
-knitr::kable(find_duplicates(data, duplicate.column.name = "uuid"))
-```
-
-### Gives you the same result as
-
-```{r,eval=F}
-find_duplicates_uuid(data)
-```
-```{r,echo=F}
-knitr::kable(find_duplicates_uuid(data))
-```
-
-## Checking for outliers
-
-```{r,eval=F}
-find_outliers(data)
-
-```
-```{r,echo=F}
-knitr::kable(find_outliers(data))
-
+```{r}
+inspect_all(testdf)
 ```
 
 
-## Checking for other responses
+## If the uuid id column does not contain "uuid", specify:
 
-```{r,eval=F}
-find_other_responses(data)
-```
-```{r,echo=F}
-knitr::kable(find_other_responses(data))
-
-```
-
-## Checking for sensitive data columns
-```{r, eval=F}
-sensitive_columns(data)
-```
-```{r, echo=F}
-knitr::kable(sensitive_columns(data))
+```{r}
+inspect_all(df = testdf,uuid.column.name = "b")
 ```

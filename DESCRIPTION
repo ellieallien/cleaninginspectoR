@@ -12,6 +12,11 @@ Encoding: UTF-8
 LazyData: true
 Suggests: 
     testthat,
-    knitr,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 6.1.1
+Depends: 
+    reshape,
+    questionr,
+    knitr,
+    dplyr

@@ -5,15 +5,20 @@ rstudioapi::isAvailable("0.99.149")
 
 
 devtools::install_github("r-lib/devtools")
+install.packages("reshape")
 
 usethis::create_package("./cleaninginspectoR")
-
-require(c("devtools", "testthat", "knitr", "reachR"))
+#
+usethis::use_package("reshape",type = "Depends")
+usethis::use_package("questionr",type = "Depends")
+usethis::use_package("knitr",type = "Depends")
+usethis::use_package("dplyr",type = "Depends")
 
 library(roxygen2)
 library(devtools)
 library(survey)
 library(dplyr)
+library(questionr)
 
 has_devel()
 print(has_devel())
@@ -24,13 +29,10 @@ print(has_devel())
 
 usethis::use_test()
 
-data <- read.csv("data.csv")
-data <- data[data$survey_consent != "no_eligible",]
-save(data, file = "data.RDA")
 
 print(rtools_path() )
 has_rtools()
-build()
+devtools::build()
 devtools::load_all()
 devtools::document()
 devtools::test()

@@ -16,7 +16,65 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
+
+```{r, results='hide', message=FALSE}
 library("cleaninginspectoR")
-print(smol)
+library("dplyr")
+library("questionr")
+library("reshape2")
+```
+
+# Generating a fake data frame 
+```{r}
+data <- data.frame(a= c(runif(99),7287), b=sample(letters,100,T), uuid=c(1:99, 4), water.source.other = c(rep(F,99),"beer"), GPS.lat = runif(100))
+```
+
+## Finding duplicates in the data 
+
+### Generic version with column name
+
+```{r,eval=F}
+find_duplicates(data, duplicate.column.name = "uuid")
+```
+```{r,echo=F}
+knitr::kable(find_duplicates(data, duplicate.column.name = "uuid"))
+```
+
+### Gives you the same result as
+
+```{r,eval=F}
+find_duplicates_uuid(data)
+```
+```{r,echo=F}
+knitr::kable(find_duplicates_uuid(data))
+```
+
+## Checking for outliers
+
+```{r,eval=F}
+find_outliers(data)
+
+```
+```{r,echo=F}
+knitr::kable(find_outliers(data))
+
+```
+
+
+## Checking for other responses
+
+```{r,eval=F}
+find_other_responses(data)
+```
+```{r,echo=F}
+knitr::kable(find_other_responses(data))
+
+```
+
+## Checking for sensitive data columns
+```{r, eval=F}
+sensitive_columns(data)
+```
+```{r, echo=F}
+knitr::kable(sensitive_columns(data))
 ```

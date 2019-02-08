@@ -1,11 +1,6 @@
 
-standard_checks<-function(df,dfduplicate.column.name = NULL){
+inspect_all<-function(df,uuid.column.name = NULL){
 
-outliers
-duplicates
-# cleaning_log
-other_recoding
-gps_no
 
 }
 
@@ -30,11 +25,11 @@ find_duplicates <- function (data, duplicate.column.name) {
     return(matrix(0, nrow = 0, ncol = 5, dimnames = list(NULL,
                                                          c("index", "value", "variable", "has_issue", "issue_type"))))
   }
-  duplicate <- cbind(index = duplicate, value = data[[duplicate.column.name]][duplicate])
+  duplicate <- data.frame(index = duplicate, value = data[[duplicate.column.name]][duplicate],stringsAsFactors = F)
   colnames(duplicate) <- c("index", "value")
-  duplicate <- cbind(duplicate, variable = duplicate.column.name,
-                     has_issue = T, issue_type = paste("duplicate in", duplicate.column.name))
-  as.data.frame(duplicate)
+  duplicate <- data.frame(duplicate, variable = duplicate.column.name,
+                     has_issue = T, issue_type = paste("duplicate in", duplicate.column.name),stringsAsFactors = F)
+  as.data.frame(duplicate,stringsAsFactors = F)
 }
 
 
@@ -73,21 +68,23 @@ find_outliers <- function (data)
                                                  0)) {
       return(empty_issues_table())
     }
-    else if (nrow(outliers_log_normal[[x]]) < nrow(outliers_normal[[x]])) { ## for each variable, select the one with fewer outliers
-      data.frame(outliers_log_normal[[x]], variable = rep(x,
-                                                          nrow(outliers_log_normal[[x]])), issue_type = rep("log normal distribution outlier",
-                                                                                                            nrow(outliers_log_normal[[x]])))
+    else if (nrow(outliers_log_normal[[x]]) < nrow(outliers_normal[[x]])) { ## for each variable, select the method with fewer outliers
+      data.frame(outliers_log_normal[[x]],
+                 variable = rep(x,nrow(outliers_log_normal[[x]])), # rep(...,nrow()) makes this work for no rows etc.
+                 has_issue=rep(T,nrow(outliers_log_normal[[x]])),
+                 issue_type = rep("log normal distribution outlier",nrow(outliers_log_normal[[x]])),stringsAsFactors = F)
     }
     else {
-      data.frame(outliers_normal[[x]], variable = rep(x,
-                                                      nrow(outliers_normal[[x]])), issue_type = rep("normal distribution outlier",
-                                                                                                    nrow(outliers_normal[[x]])))
+      data.frame(outliers_normal[[x]],
+                 variable = rep(x,nrow(outliers_normal[[x]])),
+                 has_issue = rep(T,nrow(outliers_normal[[x]])),
+                 issue_type = rep("normal distribution outlier",nrow(outliers_normal[[x]])),
+                 stringsAsFactors = F)
     }
   }) %>% do.call(rbind, .)
   if (nrow(outliers) == 0) {
     return(empty_issues_table())
   }
-  outliers <- data.frame(outliers, has_issue = T)
   outliers$variable <- as.character(outliers$variable)
   return(outliers)
 }
@@ -113,7 +110,7 @@ find_other_responses <- function (data)
   others[, "value"] <- paste(others[, "value"], "\\\\", others[,
                                                                "count"], "instance(s)")
   others <- data.frame(index = NA, others[, c("value", "variable")],
-                       has_issue = NA, issue_type = "'other' response. may need recoding.")
+                       has_issue = NA, issue_type = "'other' response. may need recoding.", stringsAsFactors = F)
 
   return(others)
   }
@@ -131,6 +128,6 @@ sensitive_columns <- function (data)
   sensitive.cols<- grep("GPS.|gps.|phone.|Latitude.|Longitude.|Phone.", x = names(data), value = T)
   if(length(sensitive.cols) == 0){return(empty_issues_table())}
   sensitive.cols <- data.frame(index = NA, value = NA, variable = sensitive.cols,
-                       has_issue = "yes !", issue_type = "This looks like sensitive information. Please ensure all PII is removed")
+                       has_issue = TRUE, issue_type = "Potentially sensitive information. Please ensure all PII is removed",stringsAsFactors = F)
   return(sensitive.cols)}
 

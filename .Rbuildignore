@@ -1,2 +1,4 @@
 ^cleaninginspectoR\.Rproj$
 ^\.Rproj\.user$
+^\.Rhistory$
+^\.package_construction\.R$

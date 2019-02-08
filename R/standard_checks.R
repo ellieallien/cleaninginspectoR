@@ -1,5 +1,5 @@
 
-standard_checks<-function(df){
+standard_checks<-function(df,dfduplicate.column.name = NULL){
 
 outliers
 duplicates
@@ -49,18 +49,20 @@ grep("uuid", names(data), value = T)
 #' Find outliers in the data, deciding whether log or normal outlier functions should be used.
 #'
 #' @param data a dataframe
-#' @return A list of numeric outliers that are X% from the mean
+#' @return A list of numeric outliers that are 3 standard deviations from the mean
 
 find_outliers <- function (data)
 {
+  ## calculate both normal and log normal outliers for the whole dataframe
   outliers_normal <- data %>% data_validation_outliers_normal
   outliers_log_normal <- data %>% data_validation_outliers_log_normal
   outliers <- lapply(names(data), function(x) {
+    ## return an empty issues dataframe of issues if no outliers are found
     if ((nrow(outliers_log_normal[[x]]) == 0) & (nrow(outliers_normal[[x]]) ==
                                                  0)) {
       return(reachR:::empty_issues_table())
     }
-    else if (nrow(outliers_log_normal[[x]]) < nrow(outliers_normal[[x]])) {
+    else if (nrow(outliers_log_normal[[x]]) < nrow(outliers_normal[[x]])) { ## for each variable, select the one with fewer outliers
       data.frame(outliers_log_normal[[x]], variable = rep(x,
                                                           nrow(outliers_log_normal[[x]])), issue_type = rep("log normal distribution outlier",
                                                                                                             nrow(outliers_log_normal[[x]])))
@@ -79,6 +81,11 @@ find_outliers <- function (data)
   return(outliers)
 }
 
+#' Check the dataset for variables
+#'
+#' @param data a dataframe
+#' @param duplicate.column.name the column in the dataframe
+#' @return A dataframe of the issue log format, containing the index and value of other values that may need recoding
 find_other_responses <- function (data)
 {
   frequency_tables <- data %>% select_other_columns %>% aggregate_count

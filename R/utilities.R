@@ -86,16 +86,12 @@ setcolnames<-function(x,colnames){
 #' has data
 #' removes NA, empty strings and non-finite values from a vector
 #' @param x vector
-#'
 #' @param return.index if true, returns indices of the vector that have valid data. Defaults to FALSE.
 #' @param
 #' @param
 #' @return returns the values of the input vector that contain valid data
 #' @seealso \code{\link{}}
-#' @export
 #' @examples
-#' example1 code
-#' example1 code
 hasdata<-function(x,return.index=F){
   # in: vector of any class
   # out: the in vector without NULL,NA, or ""

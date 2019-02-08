@@ -1,11 +1,7 @@
 
-standard_checks<-function(df,dfduplicate.column.name = NULL){
+inspect_all<-function(df,uuid.column.name = NULL){
 
-outliers
-duplicates
-# cleaning_log
-other_recoding
-gps_no
+
 
 }
 

@@ -1,13 +1,13 @@
 Package: cleaninginspectoR
-Title: What the Package Does (One Line, Title Case)
+Title: simple data cleaning checks
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Martin",
+           family = "Barner",
            role = c("aut", "cre"),
-           email = "first.last@example.com")
-Description: What the package does (one paragraph).
-License: What license it uses
+           email = "martin.barner@impact-initiatives.org")
+Description: simple data cleaning checks
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Suggests: 

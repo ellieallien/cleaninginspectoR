@@ -3,7 +3,6 @@
 #' rudimentary checks to flag potentially problematic values in a dataset
 #'
 #' \subsection{Functionality}
-#'
 #' \itemize{
 #'   \item `inspect_all()`: applies all checks listed below
 #'   \item `find_duplicates()` looks for duplicates in columns that should be unique
@@ -13,13 +12,13 @@
 #'   \item `sensitive_columns()` looks for keywords of sensitive variables in column names
 #' }
 #'
-#'  \subsection{Output}
+#'\subsection{Output}
 #'
 #' The output has the same structure for all functions of this package:
 #'
 #' A data frame with the following columns:
 #'	value	variable	has_issue	issue_type
-#' \itemize{
+#'\itemize{
 #'   \item `index`: the index of the row of the original data in which the issue occured.  (NA if applies to multiple rows)
 #'   \item `value` the suspicious value
 #'   \item `variable` The column containing the suspicious value
@@ -27,7 +26,7 @@
 #'   \item `issue_type` a description/name of the potential issue
 #' }
 #'
-#'  \subsection{Limitations}
+#'\subsection{Limitations}
 #'
 #' 1. These checks are under no circumstances sufficient or complete in any way, and more context and data specific checks are always necessary.
 #' 2. the check for sensitive columns `sensitive_columns()` is _rudimentary_ at best and is under no circumstances sufficient to ensure data protection in any way

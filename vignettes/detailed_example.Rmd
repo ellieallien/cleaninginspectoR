@@ -17,67 +17,77 @@ knitr::opts_chunk$set(
 ```
 
 
+## Load the cleaninginspectoR Package
+
 ```{r, results='hide', message=FALSE,warning=FALSE,error=FALSE}
 library("cleaninginspectoR")
 ```
 
 ## Example data frame
-For illustration purposes 
+
+Here we create some fake data for illustration purposes.
+It is not important to understand this; we keep it in so you can run the example yourself if you like.
+The dataset contains:
+
+- variable `a`: random values and outliers
+- variable `uuid`: values should be unique but are not
+- variable `water.source.other`: all NA except for two
+- variable `GPS.lat` just some numbers, but the column header indicates this is potentially sensitive
+
+
 ```{r}
-data <- data.frame(a= c(runif(99),7287),
+testdf <- data.frame(a= c(runif(98),7287,-100),
                    b=sample(letters,100,T),
                    uuid=c(1:98, 4,20),
-                   water.source.other = c(rep(NA,98),"neighbours","neighbours"),
+                   water.source.other = c(rep(NA,98),"neighbour's well","neighbour's well"),
                    GPS.lat = runif(100)
                    )
 ```
 
-## Finding duplicates in the data 
+## Finding duplicates in certain columns 
 
-### Generic version with column name
-
-```{r,eval=F}
-find_duplicates(data, duplicate.column.name = "uuid")
-```
-```{r,echo=F}
-knitr::kable(find_duplicates(data, duplicate.column.name = "uuid"))
-```
-
-### Gives you the same result as
+There is a generic function to find duplicates in a certain specified column:
 
 ```{r,eval=F}
-find_duplicates_uuid(data)
+find_duplicates(testdf, duplicate.column.name = "uuid")
 ```
+
 ```{r,echo=F}
-knitr::kable(find_duplicates_uuid(data))
+knitr::kable(find_duplicates(testdf, duplicate.column.name = "uuid"))
+```
+
+Often this is used on a column with UUID's, so there is a wrapper that looks for "uuid" in the column names and returns duplicates in the first matching column it finds. This gives the same result as the above:
+
+```{r,eval=F}
+find_duplicates_uuid(testdf)
+```
+
+```{r,echo=F}
+knitr::kable(find_duplicates_uuid(testdf))
 ```
 
 ## Checking for outliers
 
 ```{r,eval=F}
-find_outliers(data)
-
+find_outliers(testdf)
 ```
+
 ```{r,echo=F}
-knitr::kable(find_outliers(data))
-
+knitr::kable(find_outliers(testdf))
 ```
 
+Run `?find_outliers` for details
 
 ## Checking for other responses
 
 ```{r,eval=F}
-find_other_responses(data)
+find_other_responses(testdf)
 ```
+
 ```{r,echo=F}
-knitr::kable(find_other_responses(data))
+knitr::kable(find_other_responses(testdf))
 
 ```
 
-## Checking for sensitive data columns
-```{r, eval=F}
-sensitive_columns(data)
-```
-```{r, echo=F}
-knitr::kable(sensitive_columns(data))
-```
+Run `?find_other_responses` for details
+

@@ -10,7 +10,6 @@ rudimentary checks to flag potentially problematic values in a dataset
 }
 \details{
 \subsection{Functionality}
-
 \itemize{
 \item \code{inspect_all()}: applies all checks listed below
 \item \code{find_duplicates()} looks for duplicates in columns that should be unique

@@ -2,21 +2,24 @@
 % Please edit documentation in R/standard_checks.R
 \name{find_duplicates}
 \alias{find_duplicates}
-\title{Check the dataset for duplicates in a variable.}
+\title{Find duplicates / non-unique values in a variable}
 \usage{
 find_duplicates(data, duplicate.column.name)
 }
 \arguments{
 \item{data}{a dataframe}
 
-\item{duplicate.column.name}{the column in the dataframe}
+\item{duplicate.column.name}{the name of the column the dataframe to be checked for duplicates as a string (in quotes)}
 }
 \value{
-A dataframe of the issue log format, containing the index and value of duplicated values
+A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 }
 \description{
-Check the dataset for duplicates in a variable.
+Find duplicates / non-unique values in a variable
 }
 \examples{
-find_duplicates(data, "_uuid")
+# a test dataset with 1000 rows; one numeric variable and one id variable
+testdf<-data.frame(numeric_var=runif(10),unique_ids=c(1,2,3,4,5,6,7,8,1,3))
+# find duplicates in the unique_ids column:
+find_duplicates(data, "unique_ids")
 }

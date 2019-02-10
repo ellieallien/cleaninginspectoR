@@ -1,11 +1,14 @@
 
-#' Check the dataset for duplicates in a variable.
+#' Find duplicates / non-unique values in a variable
 #'
 #' @param data a dataframe
-#' @param duplicate.column.name the column in the dataframe
-#' @return A dataframe of the issue log format, containing the index and value of duplicated values
+#' @param duplicate.column.name the name of the column the dataframe to be checked for duplicates as a string (in quotes)
+#' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 #' @examples
-#' find_duplicates(data, "_uuid")
+#' # a test dataset with 1000 rows; one numeric variable and one id variable
+#' testdf<-data.frame(numeric_var=runif(10),unique_ids=c(1,2,3,4,5,6,7,8,1,3))
+#' # find duplicates in the unique_ids column:
+#' find_duplicates(data, "unique_ids")
 #' @export
 find_duplicates <- function (data, duplicate.column.name) {
 
@@ -28,17 +31,25 @@ find_duplicates <- function (data, duplicate.column.name) {
 }
 
 
-#' Check the dataset for duplicates in the uuid variable.
+
+#' Search UUID column, then find duplicates / non-unique values in it
 #'
 #' @param data a dataframe
-#' @return A dataframe of the issue log format, containing the index and value of duplicated uuids
-#' @export
+#' @details searches for "uuid" (not case sensitive) in the variable names. Identifies duplicate values in the first variable that matches the search.
+#' This function uses the more generic `find_duplicates()` function, which you should use if your id column doesn't contain "uuid"
+#' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
+#' @examples
+#' # a test dataset with 1000 rows; one numeric variable and one id variable
+#' testdf<-data.frame(numeric_var=runif(10),unique_ids=c(1,2,3,4,5,6,7,8,1,3))
+#' # find duplicates in the unique_ids column:
+#' find_duplicates_uuid(data)
+#'@export
 find_duplicates_uuid <- function (data) {
 
   ### sanitise inputs
   if(!is.data.frame(data))stop("first input must be a data frame. Use typeof(data) to find out what you have instead") #ensure first input is a dataframe
   ### find uuid column and check it is a single value
-uuid.name <- grep("uuid", names(data), value = T)
+uuid.name <- grep("uuid", names(data), value = T,ignore.case = T)
 if(length(uuid.name) == 0){
   warning("Could not find the uuid automatically in the dataset. Please provide the name of the uuid column as a parameter for find_duplicates()")
   return(empty_issues_table())
@@ -50,10 +61,12 @@ return(find_duplicates(data, uuid.name))
 
 
 
-#' Find outliers in the data, deciding whether log or normal outlier functions should be used.
+#' Find outliers in all numerical columns of a dataset
 #'
 #' @param data a dataframe
-#' @return A list of numeric outliers that are 3 standard deviations from the mean
+#' @details Searches for values that are outside more than three standard deviations from the mean.
+#' If fewer outliers are found when the data is log-transformed before the check, only outliers in the log-transformed data are returned.
+#' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 #' @export
 find_outliers <- function (data)
 {
@@ -87,11 +100,11 @@ find_outliers <- function (data)
   return(outliers)
 }
 
-#' Check the dataset for variables
+#' Find all responses in all columns that might be "specify other" responses to a multiple choice question
 #'
 #' @param data a dataframe
-#' @param duplicate.column.name the column in the dataframe
-#' @return A dataframe of the issue log format, containing the index and value of other values that may need recoding
+#' @details Performs a non-case sensitive search for "other" in english and french along the column names of the dataframe and returns all unique values and their frequency.
+#' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 #' @export
 find_other_responses <- function (data)
 {
@@ -114,18 +127,21 @@ find_other_responses <- function (data)
   }
 
 
-#' Check the dataset for senstive variables
+#' Search column names for words often used in senstive variables
 #'
 #' @param data a dataframe
-#' @return A dataframe of the issue log format, containing the variables that may contain senstitive data
-#' @export
-#'
-
-sensitive_columns <- function (data)
+#' @param i.know.this.check.is.insufficient optional: if not set to TRUE, this function throws a warning.
+#' @details Searches column headers for keywords "gps", "phone","latitude", "longitude" and "phone" (not case sensitive)
+#' WARNING: this check is rudimentary and does not suffice in any way to insure protection of sensitive information.
+#' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
+sensitive_columns <- function (data,i.know.this.check.is.insufficient=F)
 {
-  sensitive.cols<- grep("GPS.|gps.|phone.|Latitude.|Longitude.|Phone.", x = names(data), value = T)
+  sensitive.cols<- grep("GPS|gps|phone|Latitude|Longitude|Phone", x = names(data), value = T,ignore.case = T)
   if(length(sensitive.cols) == 0){return(empty_issues_table())}
   sensitive.cols <- data.frame(index = NA, value = NA, variable = sensitive.cols,
                        has_issue = TRUE, issue_type = "Potentially sensitive information. Please ensure all PII is removed",stringsAsFactors = F)
-  return(sensitive.cols)}
+  if(!i.know.this.check.is.insufficient){warning("sensitive_columns() is rudimentary and does not provide ANY data protection.")}
+  return(sensitive.cols)
+
+  }
 

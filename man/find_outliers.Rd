@@ -2,7 +2,7 @@
 % Please edit documentation in R/standard_checks.R
 \name{find_outliers}
 \alias{find_outliers}
-\title{Find outliers in the data, deciding whether log or normal outlier functions should be used.}
+\title{Find outliers in all numerical columns of a dataset}
 \usage{
 find_outliers(data)
 }
@@ -10,8 +10,12 @@ find_outliers(data)
 \item{data}{a dataframe}
 }
 \value{
-A list of numeric outliers that are 3 standard deviations from the mean
+A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 }
 \description{
-Find outliers in the data, deciding whether log or normal outlier functions should be used.
+Find outliers in all numerical columns of a dataset
+}
+\details{
+Searches for values that are outside more than three standard deviations from the mean.
+If fewer outliers are found when the data is log-transformed before the check, only outliers in the log-transformed data are returned.
 }

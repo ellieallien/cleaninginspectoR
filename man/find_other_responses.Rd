@@ -2,18 +2,19 @@
 % Please edit documentation in R/standard_checks.R
 \name{find_other_responses}
 \alias{find_other_responses}
-\title{Check the dataset for variables}
+\title{Find all responses in all columns that might be "specify other" responses to a multiple choice question}
 \usage{
 find_other_responses(data)
 }
 \arguments{
 \item{data}{a dataframe}
-
-\item{duplicate.column.name}{the column in the dataframe}
 }
 \value{
-A dataframe of the issue log format, containing the index and value of other values that may need recoding
+A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 }
 \description{
-Check the dataset for variables
+Find all responses in all columns that might be "specify other" responses to a multiple choice question
+}
+\details{
+Performs a non-case sensitive search for "other" in english and french along the column names of the dataframe and returns all unique values and their frequency.
 }

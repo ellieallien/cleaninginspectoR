@@ -2,7 +2,7 @@
 % Please edit documentation in R/standard_checks.R
 \name{find_duplicates_uuid}
 \alias{find_duplicates_uuid}
-\title{Check the dataset for duplicates in the uuid variable.}
+\title{Search UUID column, then find duplicates / non-unique values in it}
 \usage{
 find_duplicates_uuid(data)
 }
@@ -10,8 +10,18 @@ find_duplicates_uuid(data)
 \item{data}{a dataframe}
 }
 \value{
-A dataframe of the issue log format, containing the index and value of duplicated uuids
+A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 }
 \description{
-Check the dataset for duplicates in the uuid variable.
+Search UUID column, then find duplicates / non-unique values in it
+}
+\details{
+searches for "uuid" (not case sensitive) in the variable names. Identifies duplicate values in the first variable that matches the search.
+This function uses the more generic `find_duplicates()` function, which you should use if your id column doesn't contain "uuid"
+}
+\examples{
+# a test dataset with 1000 rows; one numeric variable and one id variable
+testdf<-data.frame(numeric_var=runif(10),unique_ids=c(1,2,3,4,5,6,7,8,1,3))
+# find duplicates in the unique_ids column:
+find_duplicates_uuid(data)
 }

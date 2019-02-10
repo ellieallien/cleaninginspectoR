@@ -4,7 +4,7 @@ author: "Eliora Henzler"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Detailed Example}
+  %\VignetteIndexEntry{Quickstart}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Load the cleaninginspectoR library
 
 ```{r, results='hide', message=FALSE,warning=FALSE,error=FALSE}
 library("cleaninginspectoR")
@@ -23,7 +24,17 @@ library("cleaninginspectoR")
 
 
 ## Example data frame
-For illustration purposes
+
+Here we create some fake data for illustration purposes.
+It is not important to understand this; we keep it in so you can run the example yourself if you like.
+The dataset contains:
+
+- variable `a`: random values and outliers
+- variable `uuid`: values should be unique but are not
+- variable `water.source.other`: all NA except for two
+- variable `GPS.lat` just some numbers, but the column header indicates this is potentially sensitive
+
+
 ```{r}
 testdf <- data.frame(a= c(runif(98),7287,-100),
                    b=sample(letters,100,T),
@@ -33,15 +44,31 @@ testdf <- data.frame(a= c(runif(98),7287,-100),
                    )
 ```
 
-## Apply all cleaning inspections
 
-```{r}
+## Perform all available cleaning inspections
+
+The function `inspect_all` runs all cleaning checks that are available.
+
+```{r,eval=F}
 inspect_all(testdf)
 ```
+```{r,eval=T}
+kable(inspect_all(testdf))
+```
 
+## For unusual UUID column names
 
-## If the uuid id column does not contain "uuid", specify:
+One of the things `inspect_all` does is to look for duplicates in the first column containing the word "uuid". If your ID column has a different name, you can specify it in the second parameter:
 
-```{r}
+```{r,eval=F}
 inspect_all(df = testdf,uuid.column.name = "b")
 ```
+
+```{r,eval=T}
+kable(inspect_all(df = testdf,uuid.column.name = "b"))
+```
+
+
+## More Details
+
+For more information and individual check functions, see the [detailed example](detailed_example.html).

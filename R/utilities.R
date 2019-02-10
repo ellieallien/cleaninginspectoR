@@ -66,7 +66,7 @@ log.outliers.numerical<-function(x,maximum_standard_deviations=3){
   # out: vector of indicies, of values in x that deviate more than maximum_standard_deviations from the mean.
   x<- suppressWarnings(as.numeric(as.character(x))) # as.character to prevent factors from being treated is factor level ID integer
   x_not_logged<-x
-  x <- log(x)
+  x <- suppressWarnings(log(x))
   x_data_only<-hasdata(x)
   x_data_only_indices<-hasdata(x,return.index = T)
   outliers_indices_in_data_only<-which(abs(x_data_only-mean(x_data_only))>maximum_standard_deviations*sd(x_data_only) & length(unique(x_data_only))>10)

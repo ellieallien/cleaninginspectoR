@@ -2,16 +2,22 @@
 % Please edit documentation in R/standard_checks.R
 \name{sensitive_columns}
 \alias{sensitive_columns}
-\title{Check the dataset for senstive variables}
+\title{Search column names for words often used in senstive variables}
 \usage{
-sensitive_columns(data)
+sensitive_columns(data, i.know.this.check.is.insufficient = F)
 }
 \arguments{
 \item{data}{a dataframe}
+
+\item{i.know.this.check.is.insufficient}{optional: if not set to TRUE, this function throws a warning.}
 }
 \value{
-A dataframe of the issue log format, containing the variables that may contain senstitive data
+A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 }
 \description{
-Check the dataset for senstive variables
+Search column names for words often used in senstive variables
+}
+\details{
+Searches column headers for keywords "gps", "phone","latitude", "longitude" and "phone" (not case sensitive)
+WARNING: this check is rudimentary and does not suffice in any way to insure protection of sensitive information.
 }

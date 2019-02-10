@@ -17,6 +17,13 @@ knitr::opts_chunk$set(
 ```
 
 
+# Specific test functions
+
+## what is "all" in inspect_all?
+
+`inspect_all()` wraps a number of specific data cleaning checks.
+These can all be accessed directly as individual functions, outlined below.
+
 ## Load the cleaninginspectoR Package
 
 ```{r, results='hide', message=FALSE,warning=FALSE,error=FALSE}
@@ -65,6 +72,8 @@ find_duplicates_uuid(testdf)
 ```{r,echo=F}
 knitr::kable(find_duplicates_uuid(testdf))
 ```
+
+run `?find_duplicates` or `?find_duplicates_uuid` for details.
 
 ## Checking for outliers
 

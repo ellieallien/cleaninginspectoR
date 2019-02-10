@@ -52,7 +52,7 @@ The function `inspect_all` runs all cleaning checks that are available.
 ```{r,eval=F}
 inspect_all(testdf)
 ```
-```{r,eval=T}
+```{r,eval=T,echo=F}
 kable(inspect_all(testdf))
 ```
 

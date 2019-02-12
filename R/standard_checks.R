@@ -108,11 +108,22 @@ find_outliers <- function (data)
 #' @export
 find_other_responses <- function (data)
 {
-  frequency_tables <- data %>% select_other_columns %>% aggregate_count
+
+  other_cols<- data %>% select_other_columns
+  other_cols<-other_cols[,sapply(other_cols,function(x){!all(is.na(x))})]
+  frequency_tables <- other_cols %>% aggregate_count
   if (length(frequency_tables) == 0) {
     return(empty_issues_table())
   }
-  others <- frequency_tables %>% melt %>% setcolnames(c("value", "count", "variable"))
+
+  others <- frequency_tables %>% lapply(function(x){
+    if(is.na(nrow(x))){return(NULL)}
+    if(is.na(ncol(x))){return(NULL)}
+    if(nrow(x)==0){return(NULL)}
+    if(ncol(x)==0){return(NULL)}
+    return(x)
+  }) %>% melt %>%
+    do.call(rbind,.) %>% setcolnames(c("value", "count", "variable"))
   others <- others[others$value != "" & others$value != FALSE &
                      others$value != TRUE, ]
   if (nrow(others) == 0) {

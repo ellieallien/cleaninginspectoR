@@ -22,7 +22,6 @@ knitr::opts_chunk$set(
 library("cleaninginspectoR")
 ```
 
-
 ## Example data frame
 
 Here we create some fake data for illustration purposes.

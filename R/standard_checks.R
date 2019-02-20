@@ -108,18 +108,17 @@ find_outliers <- function (data)
 #' @export
 find_other_responses <- function (data)
 {
-  frequency_tables <- data %>% select_other_columns %>% aggregate_count
-  if (length(frequency_tables) == 0) {
-    return(empty_issues_table())
-  }
-  others <- frequency_tables %>% melt %>% setcolnames(c("value", "count", "variable"))
-  others <- others[others$value != "" & others$value != FALSE &
-                     others$value != TRUE, ]
+  counts <- data %>% select_other_columns %>% gather %>% group_by(key,value) %>% summarise(count=length(value)) %>% filter(!is.na(value))
+    #summarise_all(funs(sum, na.rm = T))
+
+  others <- counts %>% filter(!value %in% c("", TRUE, FALSE, 1, 0))
+
   if (nrow(others) == 0) {
     return(empty_issues_table())
   }
-  others[, "value"] <- paste(others[, "value"], "\\\\", others[,
-                                                               "count"], "instance(s)")
+
+  others <- others %>% mutate(value= paste0(value," /// instances: ",count)) %>% select(variable = key,value)
+
   others <- data.frame(index = NA, others[, c("value", "variable")],
                        has_issue = NA, issue_type = "'other' response. may need recoding.", stringsAsFactors = F)
 

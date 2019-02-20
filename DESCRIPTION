@@ -19,4 +19,5 @@ Depends:
     reshape,
     questionr,
     knitr,
-    dplyr
+    dplyr,
+    tidyr

@@ -133,6 +133,7 @@ find_other_responses <- function (data)
 #' @details Searches column headers for keywords "gps", "phone","latitude", "longitude" and "phone" (not case sensitive)
 #' WARNING: this check is rudimentary and does not suffice in any way to insure protection of sensitive information.
 #' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
+#' @export
 sensitive_columns <- function (data,i.know.this.check.is.insufficient=F)
 {
   sensitive.cols<- grep("GPS|gps|phone|Latitude|Longitude|Phone", x = names(data), value = T,ignore.case = T)

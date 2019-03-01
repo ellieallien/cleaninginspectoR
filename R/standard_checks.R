@@ -108,18 +108,22 @@ find_outliers <- function (data, uuid.column.name)
 #' @export
 find_other_responses <- function (data)
 {
-  counts <- data %>% select_other_columns %>% extract(.,colSums(is.na(.))<nrow(.)) %>% gather
+  counts <- data %>% select_other_columns %>% gather
+
   if(ncol(counts) == 0){return(empty_issues_table())}else{
-  counts %>% group_by(key,value) %>% summarise(count=length(value)) %>% filter(!is.na(value))
+  #%>% extract(.,colSums(!is.na(.))<nrow(.))
+  counts %<>% filter(!is.na(value)) %>% filter(!value %in% c("", TRUE, FALSE, 1, 0, "VRAI", "FAUX", "TRUE", "FALSE", "<NA>", "NA"))
+
+  counts %<>% group_by(key,value) %>% summarise(count=length(value)) %>% filter(!is.na(value))
     #summarise_all(funs(sum, na.rm = T))
 
-  others <- counts %>% filter(!value %in% c("", TRUE, FALSE, 1, 0, "VRAI", "FAUX", "TRUE", "FALSE", "<NA>"))
+  others <- counts %>% as.data.frame
 
   if (nrow(others) == 0) {
     return(empty_issues_table())
   }
 
-  others <- others %>% mutate(value= paste0(value," /// instances: ",count)) %>% select(variable = key,value)
+  others <- others %>% mutate(value = paste0(value," /// instances: ",count)) %>% select(variable = key,value)
 
   others <- data.frame(uuid = NA, index = NA, others[, c("value", "variable")],
                        has_issue = T, issue_type = "'other' response. may need recoding.", stringsAsFactors = F)

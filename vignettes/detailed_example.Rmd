@@ -78,11 +78,11 @@ run `?find_duplicates` or `?find_duplicates_uuid` for details.
 ## Checking for outliers
 
 ```{r,eval=F}
-find_outliers(testdf)
+find_outliers(testdf, "uuid"))
 ```
 
 ```{r,echo=F}
-knitr::kable(find_outliers(testdf, duplicate.column.name = "uuid"))
+knitr::kable(find_outliers(testdf, "uuid"))
 ```
 
 Run `?find_outliers` for details

@@ -50,10 +50,10 @@ testdf <- data.frame(a= c(runif(98),7287,-100),
 The function `inspect_all` runs all cleaning checks that are available.
 
 ```{r,eval=F}
-inspect_all(testdf, duplicate.column.name = "uuid")
+inspect_all(testdf, uuid.column.name = "uuid")
 ```
 ```{r,eval=T,echo=F}
-kable(inspect_all(testdf, duplicate.column.name = "uuid"))
+kable(inspect_all(testdf, uuid.column.name = "uuid"))
 ```
 
 ## For unusual UUID column names
@@ -61,11 +61,11 @@ kable(inspect_all(testdf, duplicate.column.name = "uuid"))
 One of the things `inspect_all` does is to look for duplicates in the first column containing the word "uuid". If your ID column has a different name, you can specify it in the second parameter:
 
 ```{r,eval=F}
-inspect_all(df = testdf,uuid.column.name = "b")
+inspect_all(df = testdf, uuid.column.name = "b")
 ```
 
 ```{r,eval=T}
-kable(inspect_all(df = testdf,uuid.column.name = "b"))
+kable(inspect_all(df = testdf, uuid.column.name = "b"))
 ```
 
 

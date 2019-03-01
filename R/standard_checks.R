@@ -68,7 +68,7 @@ return(find_duplicates(data, uuid.name))
 #' If fewer outliers are found when the data is log-transformed before the check, only outliers in the log-transformed data are returned.
 #' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 #' @export
-find_outliers <- function (data,uuid.column.name)
+find_outliers <- function (data, uuid.column.name)
 {
   ## calculate both normal and log normal outliers for the whole dataframe
   outliers_normal <- data %>% data_validation_outliers_normal

@@ -108,7 +108,9 @@ find_outliers <- function (data, uuid.column.name)
 #' @export
 find_other_responses <- function (data)
 {
-  counts <- data %>% select_other_columns %>% extract(.,colSums(is.na(.))<nrow(.)) %>% gather %>% group_by(key,value) %>% summarise(count=length(value)) %>% filter(!is.na(value))
+  counts <- data %>% select_other_columns %>% extract(.,colSums(is.na(.))<nrow(.)) %>% gather
+  if(ncol(counts) == 0){return(empty_issues_table())}else{
+  counts %>% group_by(key,value) %>% summarise(count=length(value)) %>% filter(!is.na(value))
     #summarise_all(funs(sum, na.rm = T))
 
   others <- counts %>% filter(!value %in% c("", TRUE, FALSE, 1, 0, "VRAI", "FAUX", "TRUE", "FALSE", "<NA>"))
@@ -124,6 +126,7 @@ find_other_responses <- function (data)
 
   return(others)
   }
+}
 
 
 #' Search column names for words often used in senstive variables

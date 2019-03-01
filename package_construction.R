@@ -20,6 +20,7 @@ library(roxygen2)
 library(devtools)
 library(survey)
 library(dplyr)
+library(magrittr)
 library(questionr)
 
 has_devel()

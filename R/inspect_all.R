@@ -9,7 +9,7 @@
 #' @examples
 #' inspect_all(my_df)
 #' @export
-inspect_all<-function(df,uuid.column.name = NULL){
+inspect_all<-function(df,uuid.column.name){
 
   uuid.provided <- !is.null(uuid.column.name)
 

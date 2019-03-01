@@ -82,7 +82,7 @@ find_outliers(testdf)
 ```
 
 ```{r,echo=F}
-knitr::kable(find_outliers(testdf))
+knitr::kable(find_outliers(testdf, duplicate.column.name = "uuid"))
 ```
 
 Run `?find_outliers` for details

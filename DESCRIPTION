@@ -20,4 +20,5 @@ Depends:
     questionr,
     knitr,
     dplyr,
-    tidyr
+    tidyr,
+    magrittr

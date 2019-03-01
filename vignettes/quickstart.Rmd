@@ -50,10 +50,10 @@ testdf <- data.frame(a= c(runif(98),7287,-100),
 The function `inspect_all` runs all cleaning checks that are available.
 
 ```{r,eval=F}
-inspect_all(testdf)
+inspect_all(testdf, duplicate.column.name = "uuid")
 ```
 ```{r,eval=T,echo=F}
-kable(inspect_all(testdf))
+kable(inspect_all(testdf, duplicate.column.name = "uuid"))
 ```
 
 ## For unusual UUID column names

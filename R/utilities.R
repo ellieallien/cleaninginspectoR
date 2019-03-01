@@ -7,7 +7,7 @@ select_other_columns <- function (data)
 
 empty_issues_table <- function ()
 {
-  data.frame(index = numeric(), value = numeric(), variable = character(),
+  data.frame(uuid= numeric(), index = numeric(), value = numeric(), variable = character(),
              has_issue = logical(), issue_type = character())
 }
 
@@ -56,7 +56,7 @@ outliers.numerical<-function(x,maximum_standard_deviations=3){
   return(
     cbind(
       index=outliers_indices_in_original_vector,
-      value=x[outliers_indices_in_original_vector]))
+      value=x[outliers_indices_in_original_vector]) %>% as.data.frame)
 }
 
 log.outliers.numerical<-function(x,maximum_standard_deviations=3){
@@ -74,7 +74,7 @@ log.outliers.numerical<-function(x,maximum_standard_deviations=3){
   return(
     cbind(
       index=outliers_indices_in_original_vector,
-      value=x_not_logged[outliers_indices_in_original_vector]))
+      value=x_not_logged[outliers_indices_in_original_vector])%>% as.data.frame)
 }
 
 

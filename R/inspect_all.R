@@ -18,7 +18,7 @@ inspect_all<-function(df,uuid.column.name = NULL){
 
   rbind(sensitive_columns(df,T),
         duplicate_uuids,
-        find_outliers(df),
+        find_outliers(df,uuid.column.name),
         find_other_responses(df))
 
 }

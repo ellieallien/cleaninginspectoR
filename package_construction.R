@@ -14,6 +14,7 @@ usethis::use_package("questionr",type = "Depends")
 usethis::use_package("knitr",type = "Depends")
 usethis::use_package("dplyr",type = "Depends")
 usethis::use_package("tidyr",type = "Depends")
+usethis::use_package("magrittr",type = "Depends")
 
 library(roxygen2)
 library(devtools)

@@ -9,18 +9,24 @@
 #' @examples
 #' inspect_all(my_df)
 #' @export
+
 inspect_all<-function(df,uuid.column.name){
 
   uuid.provided <- !is.null(uuid.column.name)
 
   if( uuid.provided){duplicate_uuids<-find_duplicates(df,duplicate.column.name = uuid.column.name)}
   if(!uuid.provided){duplicate_uuids<-find_duplicates_uuid(df)}
+  
+  find_outliers <- find_outliers(df,uuid.column.name)
+  find_outliers$value<- as.character(find_outliers$value)
+  duplicate_uuids$value <- as.character(duplicate_uuids$value)
+  find_other_responses<-find_other_responses(df)
+  find_other_responses$value <- as.character(find_other_responses$value)
 
   rbind(sensitive_columns(df,T),
         duplicate_uuids,
-        find_outliers(df,uuid.column.name),
-        find_other_responses(df))
+        find_outliers,
+        find_other_responses)
 
 }
-
 

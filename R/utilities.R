@@ -48,6 +48,8 @@ outliers.numerical<-function(x,maximum_standard_deviations=3){
   # x: numerical vector
   # maximum_standard_deviations: integer
   # out: vector of indicies, of values in x that deviate more than maximum_standard_deviations from the mean.
+  
+  x <- gsub(" ","",x)
   x<- suppressWarnings(as.numeric(as.character(x))) # as.character to prevent factors from being treated is factor level ID integer
   x_data_only<-hasdata(x)
   x_data_only_indices<-hasdata(x,return.index = T)
@@ -64,6 +66,7 @@ log.outliers.numerical<-function(x,maximum_standard_deviations=3){
   # x: numerical vector
   # maximum_standard_deviations: integer
   # out: vector of indicies, of values in x that deviate more than maximum_standard_deviations from the mean.
+  x<- gsub(" ","",x)
   x<- suppressWarnings(as.numeric(as.character(x))) # as.character to prevent factors from being treated is factor level ID integer
   x_not_logged<-x
   x <- suppressWarnings(log(x))

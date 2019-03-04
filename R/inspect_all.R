@@ -17,16 +17,15 @@ inspect_all<-function(df,uuid.column.name){
   if( uuid.provided){duplicate_uuids<-find_duplicates(df,duplicate.column.name = uuid.column.name)}
   if(!uuid.provided){duplicate_uuids<-find_duplicates_uuid(df)}
   
-  find_outliers <- find_outliers(df,uuid.column.name)
-  find_outliers$value<- as.character(find_outliers$value)
-  duplicate_uuids$value <- as.character(duplicate_uuids$value)
-  find_other_responses<-find_other_responses(df)
-  find_other_responses$value <- as.character(find_other_responses$value)
+  outliers <- find_outliers(df,uuid.column.name)
+  other_responses<-find_other_responses(df)
+  
+  list <- list(outliers, other_responses, duplicate_uuids,sensitive_columns(df,T))
+  issues <- lapply(list, function(x){if(nrow(x)>0){
+    x$value <- as.character(x$value)}
+    return(x)}) 
+  issues <- do.call(rbind,issues)
 
-  rbind(sensitive_columns(df,T),
-        duplicate_uuids,
-        find_outliers,
-        find_other_responses)
 
 }
 

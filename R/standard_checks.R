@@ -20,8 +20,7 @@ find_duplicates <- function (data, duplicate.column.name) {
   duplicate <- data[[duplicate.column.name]] %>% duplicated %>%
     which
   if (length(duplicate) == 0) {
-    return(matrix(0, nrow = 0, ncol = 6, dimnames = list(NULL,
-                                                         c("uuid", "index", "value", "variable", "has_issue", "issue_type"))))
+    return(empty_issues_table())
   }
   duplicate <- data.frame(uuid = data[[duplicate.column.name]][duplicate], index = duplicate, value = data[[duplicate.column.name]][duplicate],stringsAsFactors = F)
   colnames(duplicate) <- c("uuid","index", "value")

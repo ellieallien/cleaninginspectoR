@@ -11,13 +11,13 @@
 #'   \item `find_other_responses()` looks for values in potential "if other, specify.." type of columns
 #' }
 #'
-#'\subsection{Output}
+#' \subsection{Output}
 #'
 #' The output has the same structure for all functions of this package:
 #'
 #' A data frame with the following columns:
-#'	value	variable	has_issue	issue_type
-#'\itemize{
+#' 	value	variable	has_issue	issue_type
+#' \itemize{
 #'   \item `index`: the index of the row of the original data in which the issue occured.  (NA if applies to multiple rows)
 #'   \item `value` the suspicious value
 #'   \item `variable` The column containing the suspicious value
@@ -25,7 +25,7 @@
 #'   \item `issue_type` a description/name of the potential issue
 #' }
 #'
-#'\subsection{Limitations}
+#' \subsection{Limitations}
 #'
 #' 1. These checks are under no circumstances sufficient or complete in any way, and more context and data specific checks are always necessary.
 #' 2. Any data protection related checks are _rudimentary_ at best and are under no circumstances sufficient to ensure data protection in any way
@@ -35,5 +35,3 @@
 #' @name cleaninginspectoR
 #' @md
 NULL
-
-

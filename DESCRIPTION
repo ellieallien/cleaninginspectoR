@@ -20,6 +20,6 @@ Depends:
     questionr,
     knitr,
     dplyr,
-    assertthat
+    assertthat,
     tidyr,
     magrittr

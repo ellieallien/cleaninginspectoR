@@ -16,7 +16,6 @@ rudimentary checks to flag potentially problematic values in a dataset
 \item \code{find_duplicates_uuid()} looks for a function containing "uuid" in the name and looks for duplicates
 \item \code{find_outliers()} looks for outliers in numerical columns
 \item \code{find_other_responses()} looks for values in potential "if other, specify.." type of columns
-\item \code{sensitive_columns()} looks for keywords of sensitive variables in column names
 }
 
 \subsection{Output}
@@ -36,7 +35,7 @@ value	variable	has_issue	issue_type
 \subsection{Limitations}
 \enumerate{
 \item These checks are under no circumstances sufficient or complete in any way, and more context and data specific checks are always necessary.
-\item the check for sensitive columns \code{sensitive_columns()} is \emph{rudimentary} at best and is under no circumstances sufficient to ensure data protection in any way
-\item Although tempting, this package should \emph{never} be used to automatically remove any flagged values. This would seriously skew your dataset, and make uncertainty estimates invalid. Potential issues must be investigated on a case by case basis.
+\item Any data protection related checks are \emph{rudimentary} at best and are under no circumstances sufficient to ensure data protection in any way
+\item Although tempting, this package should \emph{never} be used to automatically remove any flagged values without double checking them manually. This would seriously skew your dataset, and make uncertainty estimates invalid. Potential issues must be investigated on a case by case basis.
 }
 }

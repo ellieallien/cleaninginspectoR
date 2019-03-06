@@ -9,7 +9,6 @@
 #'   \item `find_duplicates_uuid()` looks for a function containing "uuid" in the name and looks for duplicates
 #'   \item `find_outliers()` looks for outliers in numerical columns
 #'   \item `find_other_responses()` looks for values in potential "if other, specify.." type of columns
-#'   \item `sensitive_columns()` looks for keywords of sensitive variables in column names
 #' }
 #'
 #'\subsection{Output}
@@ -29,8 +28,8 @@
 #'\subsection{Limitations}
 #'
 #' 1. These checks are under no circumstances sufficient or complete in any way, and more context and data specific checks are always necessary.
-#' 2. the check for sensitive columns `sensitive_columns()` is _rudimentary_ at best and is under no circumstances sufficient to ensure data protection in any way
-#' 3. Although tempting, this package should _never_ be used to automatically remove any flagged values. This would seriously skew your dataset, and make uncertainty estimates invalid. Potential issues must be investigated on a case by case basis.
+#' 2. Any data protection related checks are _rudimentary_ at best and are under no circumstances sufficient to ensure data protection in any way
+#' 3. Although tempting, this package should _never_ be used to automatically remove any flagged values without double checking them manually. This would seriously skew your dataset, and make uncertainty estimates invalid. Potential issues must be investigated on a case by case basis.
 #'
 #' @docType package
 #' @name cleaninginspectoR

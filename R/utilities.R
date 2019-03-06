@@ -1,13 +1,13 @@
 select_other_columns <- function (data)
 {
-  othernames <- grep("other$|Other$|autre$|Autre$", names(data),
+  othernames <- grep("other|Other|autre|Autre", names(data),
                      value = T)
   data[othernames]
 }
 
 empty_issues_table <- function ()
 {
-  data.frame(index = numeric(), value = numeric(), variable = character(),
+  data.frame(uuid= numeric(), index = numeric(), value = numeric(), variable = character(),
              has_issue = logical(), issue_type = character())
 }
 
@@ -48,6 +48,8 @@ outliers.numerical<-function(x,maximum_standard_deviations=3){
   # x: numerical vector
   # maximum_standard_deviations: integer
   # out: vector of indicies, of values in x that deviate more than maximum_standard_deviations from the mean.
+  
+  x <- gsub(" ","",x)
   x<- suppressWarnings(as.numeric(as.character(x))) # as.character to prevent factors from being treated is factor level ID integer
   x_data_only<-hasdata(x)
   x_data_only_indices<-hasdata(x,return.index = T)
@@ -56,7 +58,7 @@ outliers.numerical<-function(x,maximum_standard_deviations=3){
   return(
     cbind(
       index=outliers_indices_in_original_vector,
-      value=x[outliers_indices_in_original_vector]))
+      value=x[outliers_indices_in_original_vector]) %>% as.data.frame)
 }
 
 log.outliers.numerical<-function(x,maximum_standard_deviations=3){
@@ -64,6 +66,7 @@ log.outliers.numerical<-function(x,maximum_standard_deviations=3){
   # x: numerical vector
   # maximum_standard_deviations: integer
   # out: vector of indicies, of values in x that deviate more than maximum_standard_deviations from the mean.
+  x<- gsub(" ","",x)
   x<- suppressWarnings(as.numeric(as.character(x))) # as.character to prevent factors from being treated is factor level ID integer
   x_not_logged<-x
   x <- suppressWarnings(log(x))
@@ -74,7 +77,7 @@ log.outliers.numerical<-function(x,maximum_standard_deviations=3){
   return(
     cbind(
       index=outliers_indices_in_original_vector,
-      value=x_not_logged[outliers_indices_in_original_vector]))
+      value=x_not_logged[outliers_indices_in_original_vector])%>% as.data.frame)
 }
 
 

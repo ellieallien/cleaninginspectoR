@@ -22,8 +22,8 @@ find_duplicates <- function (data, duplicate.column.name) {
   if (length(duplicate) == 0) {
     return(empty_issues_table())
   }
-  duplicate <- data.frame(index = duplicate, value = data[[duplicate.column.name]][duplicate],stringsAsFactors = F)
-  colnames(duplicate) <- c("index", "value")
+  duplicate <- data.frame(uuid = data[[duplicate.column.name]][duplicate], index = duplicate, value = data[[duplicate.column.name]][duplicate],stringsAsFactors = F)
+  colnames(duplicate) <- c("uuid","index", "value")
   duplicate <- data.frame(duplicate, variable = duplicate.column.name,
                      has_issue = T, issue_type = paste("duplicate in", duplicate.column.name),stringsAsFactors = F)
   as.data.frame(duplicate,stringsAsFactors = F)
@@ -67,7 +67,7 @@ return(find_duplicates(data, uuid.name))
 #' If fewer outliers are found when the data is log-transformed before the check, only outliers in the log-transformed data are returned.
 #' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 #' @export
-find_outliers <- function (data)
+find_outliers <- function (data, uuid.column.name)
 {
   ## calculate both normal and log normal outliers for the whole dataframe
   outliers_normal <- data %>% data_validation_outliers_normal
@@ -79,13 +79,13 @@ find_outliers <- function (data)
       return(empty_issues_table())
     }
     else if (nrow(outliers_log_normal[[x]]) < nrow(outliers_normal[[x]])) { ## for each variable, select the method with fewer outliers
-      data.frame(outliers_log_normal[[x]],
+      data.frame(uuid = data[[uuid.column.name]][outliers_log_normal[[x]]$index], outliers_log_normal[[x]],
                  variable = rep(x,nrow(outliers_log_normal[[x]])), # rep(...,nrow()) makes this work for no rows etc.
-                 has_issue=rep(T,nrow(outliers_log_normal[[x]])),
+                 has_issue=rep(T,nrow(outliers_log_normal[[x]])), #this was clever! well done
                  issue_type = rep("log normal distribution outlier",nrow(outliers_log_normal[[x]])),stringsAsFactors = F)
     }
     else {
-      data.frame(outliers_normal[[x]],
+      data.frame(uuid = data[[uuid.column.name]][outliers_normal[[x]]$index], outliers_normal[[x]],
                  variable = rep(x,nrow(outliers_normal[[x]])),
                  has_issue = rep(T,nrow(outliers_normal[[x]])),
                  issue_type = rep("normal distribution outlier",nrow(outliers_normal[[x]])),
@@ -107,23 +107,29 @@ find_outliers <- function (data)
 #' @export
 find_other_responses <- function (data)
 {
-  frequency_tables <- data %>% select_other_columns %>% aggregate_count
-  if (length(frequency_tables) == 0) {
-    return(empty_issues_table())
-  }
-  others <- frequency_tables %>% melt %>% setcolnames(c("value", "count", "variable"))
-  others <- others[others$value != "" & others$value != FALSE &
-                     others$value != TRUE, ]
+  counts <- data %>% select_other_columns %>% gather
+
+  if(ncol(counts) == 0){return(empty_issues_table())}else{
+  #%>% extract(.,colSums(!is.na(.))<nrow(.))
+  counts %<>% filter(!is.na(value)) %>% filter(!value %in% c("", TRUE, FALSE, 1, 0, "VRAI", "FAUX", "TRUE", "FALSE", "<NA>", "NA"))
+
+  counts %<>% group_by(key,value) %>% summarise(count=length(value)) %>% filter(!is.na(value))
+    #summarise_all(funs(sum, na.rm = T))
+
+  others <- counts %>% as.data.frame
+
   if (nrow(others) == 0) {
     return(empty_issues_table())
   }
-  others[, "value"] <- paste(others[, "value"], "\\\\", others[,
-                                                               "count"], "instance(s)")
-  others <- data.frame(index = NA, others[, c("value", "variable")],
-                       has_issue = NA, issue_type = "'other' response. may need recoding.", stringsAsFactors = F)
+
+  others <- others %>% mutate(value = paste0(value," /// instances: ",count)) %>% select(variable = key,value)
+
+  others <- data.frame(uuid = NA, index = NA, others[, c("value", "variable")],
+                       has_issue = T, issue_type = "'other' response. may need recoding.", stringsAsFactors = F)
 
   return(others)
   }
+}
 
 
 #' Search column names for words often used in senstive variables
@@ -133,11 +139,12 @@ find_other_responses <- function (data)
 #' @details Searches column headers for keywords "gps", "phone","latitude", "longitude" and "phone" (not case sensitive)
 #' WARNING: this check is rudimentary and does not suffice in any way to insure protection of sensitive information.
 #' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
+#' @export
 sensitive_columns <- function (data,i.know.this.check.is.insufficient=F)
 {
   sensitive.cols<- grep("GPS|gps|phone|Latitude|Longitude|Phone", x = names(data), value = T,ignore.case = T)
   if(length(sensitive.cols) == 0){return(empty_issues_table())}
-  sensitive.cols <- data.frame(index = NA, value = NA, variable = sensitive.cols,
+  sensitive.cols <- data.frame(uuid = NA, index = NA, value = NA, variable = sensitive.cols,
                        has_issue = TRUE, issue_type = "Potentially sensitive information. Please ensure all PII is removed",stringsAsFactors = F)
   if(!i.know.this.check.is.insufficient){warning("sensitive_columns() is rudimentary and does not provide ANY data protection.")}
   return(sensitive.cols)

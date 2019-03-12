@@ -21,18 +21,14 @@ find_duplicates <- function(data, duplicate.column.name) {
     duplicated() %>%
     which()
   if (length(duplicate) == 0) {
-    return(matrix(0, nrow = 0, ncol = 5, dimnames = list(
-      NULL,
-      c("index", "value", "variable", "has_issue", "issue_type")
-    )))
+
+    return(empty_issues_table())
   }
-  duplicate <- data.frame(index = duplicate, value = data[[duplicate.column.name]][duplicate], stringsAsFactors = F)
-  colnames(duplicate) <- c("index", "value")
-  duplicate <- data.frame(duplicate,
-    variable = duplicate.column.name,
-    has_issue = T, issue_type = paste("duplicate in", duplicate.column.name), stringsAsFactors = F
-  )
-  as.data.frame(duplicate, stringsAsFactors = F)
+  duplicate <- data.frame(uuid = data[[duplicate.column.name]][duplicate], index = duplicate, value = data[[duplicate.column.name]][duplicate],stringsAsFactors = F)
+  colnames(duplicate) <- c("uuid","index", "value")
+  duplicate <- data.frame(duplicate, variable = duplicate.column.name,
+                     has_issue = T, issue_type = paste("duplicate in", duplicate.column.name),stringsAsFactors = F)
+  as.data.frame(duplicate,stringsAsFactors = F)
 }
 
 
@@ -75,7 +71,12 @@ find_duplicates_uuid <- function(data) {
 #' If fewer outliers are found when the data is log-transformed before the check, only outliers in the log-transformed data are returned.
 #' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 #' @export
+<<<<<<< HEAD
 find_outliers <- function(data) {
+=======
+find_outliers <- function (data, uuid.column.name)
+{
+>>>>>>> fdf717aa82dba3d2851cbc48c047cf0d30f7ce86
   ## calculate both normal and log normal outliers for the whole dataframe
   outliers_normal <- data %>% data_validation_outliers_normal()
   outliers_log_normal <- data %>% data_validation_outliers_log_normal()
@@ -86,6 +87,7 @@ find_outliers <- function(data) {
       return(empty_issues_table())
     }
     else if (nrow(outliers_log_normal[[x]]) < nrow(outliers_normal[[x]])) { ## for each variable, select the method with fewer outliers
+<<<<<<< HEAD
       data.frame(outliers_log_normal[[x]],
         variable = rep(x, nrow(outliers_log_normal[[x]])), # rep(...,nrow()) makes this work for no rows etc.
         has_issue = rep(T, nrow(outliers_log_normal[[x]])),
@@ -99,6 +101,19 @@ find_outliers <- function(data) {
         issue_type = rep("normal distribution outlier", nrow(outliers_normal[[x]])),
         stringsAsFactors = F
       )
+=======
+      data.frame(uuid = data[[uuid.column.name]][outliers_log_normal[[x]]$index], outliers_log_normal[[x]],
+                 variable = rep(x,nrow(outliers_log_normal[[x]])), # rep(...,nrow()) makes this work for no rows etc.
+                 has_issue=rep(T,nrow(outliers_log_normal[[x]])), #this was clever! well done
+                 issue_type = rep("log normal distribution outlier",nrow(outliers_log_normal[[x]])),stringsAsFactors = F)
+    }
+    else {
+      data.frame(uuid = data[[uuid.column.name]][outliers_normal[[x]]$index], outliers_normal[[x]],
+                 variable = rep(x,nrow(outliers_normal[[x]])),
+                 has_issue = rep(T,nrow(outliers_normal[[x]])),
+                 issue_type = rep("normal distribution outlier",nrow(outliers_normal[[x]])),
+                 stringsAsFactors = F)
+>>>>>>> fdf717aa82dba3d2851cbc48c047cf0d30f7ce86
     }
   }) %>% do.call(rbind, .)
   if (nrow(outliers) == 0) {
@@ -114,6 +129,7 @@ find_outliers <- function(data) {
 #' @details Performs a non-case sensitive search for "other" in english and french along the column names of the dataframe and returns all unique values and their frequency.
 #' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 #' @export
+<<<<<<< HEAD
 find_other_responses <- function(data) {
   other_cols <- data %>% select_other_columns()
   other_cols <- other_cols[, sapply(other_cols, function(x) {
@@ -158,6 +174,32 @@ find_other_responses <- function(data) {
   )
 
   return(others)
+=======
+find_other_responses <- function (data)
+{
+  counts <- data %>% select_other_columns %>% gather
+
+  if(ncol(counts) == 0){return(empty_issues_table())}else{
+  #%>% extract(.,colSums(!is.na(.))<nrow(.))
+  counts %<>% filter(!is.na(value)) %>% filter(!value %in% c("", TRUE, FALSE, 1, 0, "VRAI", "FAUX", "TRUE", "FALSE", "<NA>", "NA"))
+
+  counts %<>% group_by(key,value) %>% summarise(count=length(value)) %>% filter(!is.na(value))
+    #summarise_all(funs(sum, na.rm = T))
+
+  others <- counts %>% as.data.frame
+
+  if (nrow(others) == 0) {
+    return(empty_issues_table())
+  }
+
+  others <- others %>% mutate(value = paste0(value," /// instances: ",count)) %>% select(variable = key,value)
+
+  others <- data.frame(uuid = NA, index = NA, others[, c("value", "variable")],
+                       has_issue = T, issue_type = "'other' response. may need recoding.", stringsAsFactors = F)
+
+  return(others)
+  }
+>>>>>>> fdf717aa82dba3d2851cbc48c047cf0d30f7ce86
 }
 
 
@@ -168,10 +210,23 @@ find_other_responses <- function(data) {
 #' @details Searches column headers for keywords "gps", "phone","latitude", "longitude" and "phone" (not case sensitive)
 #' WARNING: this check is rudimentary and does not suffice in any way to insure protection of sensitive information.
 #' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
+<<<<<<< HEAD
 sensitive_columns <- function(data, i.know.this.check.is.insufficient = F) {
   sensitive.cols <- grep("GPS|gps|phone|Latitude|Longitude|Phone", x = names(data), value = T, ignore.case = T)
   if (length(sensitive.cols) == 0) {
     return(empty_issues_table())
+=======
+#' @export
+sensitive_columns <- function (data,i.know.this.check.is.insufficient=F)
+{
+  sensitive.cols<- grep("GPS|gps|phone|Latitude|Longitude|Phone", x = names(data), value = T,ignore.case = T)
+  if(length(sensitive.cols) == 0){return(empty_issues_table())}
+  sensitive.cols <- data.frame(uuid = NA, index = NA, value = NA, variable = sensitive.cols,
+                       has_issue = TRUE, issue_type = "Potentially sensitive information. Please ensure all PII is removed",stringsAsFactors = F)
+  if(!i.know.this.check.is.insufficient){warning("sensitive_columns() is rudimentary and does not provide ANY data protection.")}
+  return(sensitive.cols)
+
+>>>>>>> fdf717aa82dba3d2851cbc48c047cf0d30f7ce86
   }
   sensitive.cols <- data.frame(
     index = NA, value = NA, variable = sensitive.cols,

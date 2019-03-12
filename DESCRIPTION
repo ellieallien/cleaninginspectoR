@@ -24,3 +24,5 @@ Depends:
 Imports: 
     purrr,
     data.table
+    tidyr,
+    magrittr

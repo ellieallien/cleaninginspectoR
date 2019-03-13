@@ -19,10 +19,10 @@ Depends:
     reshape,
     questionr,
     knitr,
-    dplyr,
-    assertthat
+    dplyr
 Imports: 
     purrr,
     data.table,
+    assertthat,
     tidyr,
     magrittr

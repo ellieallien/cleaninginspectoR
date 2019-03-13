@@ -1,1 +1,4 @@
 # cleaninginspectoR
+
+## Core functions
+..

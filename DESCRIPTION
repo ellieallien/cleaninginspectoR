@@ -23,6 +23,6 @@ Depends:
     assertthat
 Imports: 
     purrr,
-    data.table
+    data.table,
     tidyr,
     magrittr

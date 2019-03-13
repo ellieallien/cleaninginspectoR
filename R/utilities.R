@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 select_other_columns <- function(data) {
   othernames <- grep("other$|Other$|autre$|Autre$", names(data),
     value = T
@@ -11,19 +11,7 @@ empty_issues_table <- function() {
     index = numeric(), value = numeric(), variable = character(),
     has_issue = logical(), issue_type = character()
   )
-=======
-select_other_columns <- function (data)
-{
-  othernames <- grep("other|Other|autre|Autre", names(data),
-                     value = T)
-  data[othernames]
-}
 
-empty_issues_table <- function ()
-{
-  data.frame(uuid= numeric(), index = numeric(), value = numeric(), variable = character(),
-             has_issue = logical(), issue_type = character())
->>>>>>> fdf717aa82dba3d2851cbc48c047cf0d30f7ce86
 }
 
 aggregate_count <- function(df, split.by = NULL, ignore.missing.data = T, write.to.file = NULL) {
@@ -64,20 +52,7 @@ outliers.numerical <- function(x, maximum_standard_deviations = 3) {
   # x: numerical vector
   # maximum_standard_deviations: integer
   # out: vector of indicies, of values in x that deviate more than maximum_standard_deviations from the mean.
-<<<<<<< HEAD
-  x <- suppressWarnings(as.numeric(as.character(x))) # as.character to prevent factors from being treated is factor level ID integer
-  x_data_only <- hasdata(x)
-  x_data_only_indices <- hasdata(x, return.index = T)
-  outliers_indices_in_data_only <- which(abs(x_data_only - mean(x_data_only)) > maximum_standard_deviations * sd(x_data_only) & length(unique(x_data_only)) > 10)
-  outliers_indices_in_original_vector <- x_data_only_indices[outliers_indices_in_data_only]
-  return(
-    cbind(
-      index = outliers_indices_in_original_vector,
-      value = x[outliers_indices_in_original_vector]
-    )
-  )
-=======
-  
+
   x <- gsub(" ","",x)
   x<- suppressWarnings(as.numeric(as.character(x))) # as.character to prevent factors from being treated is factor level ID integer
   x_data_only<-hasdata(x)
@@ -87,8 +62,8 @@ outliers.numerical <- function(x, maximum_standard_deviations = 3) {
   return(
     cbind(
       index=outliers_indices_in_original_vector,
-      value=x[outliers_indices_in_original_vector]) %>% as.data.frame)
->>>>>>> fdf717aa82dba3d2851cbc48c047cf0d30f7ce86
+      value=x[outliers_indices_in_original_vector]) %>% as.data.frame(stringsAsFactors=F))
+
 }
 
 log.outliers.numerical <- function(x, maximum_standard_deviations = 3) {
@@ -96,14 +71,9 @@ log.outliers.numerical <- function(x, maximum_standard_deviations = 3) {
   # x: numerical vector
   # maximum_standard_deviations: integer
   # out: vector of indicies, of values in x that deviate more than maximum_standard_deviations from the mean.
-<<<<<<< HEAD
-  x <- suppressWarnings(as.numeric(as.character(x))) # as.character to prevent factors from being treated is factor level ID integer
-  x_not_logged <- x
-=======
   x<- gsub(" ","",x)
   x<- suppressWarnings(as.numeric(as.character(x))) # as.character to prevent factors from being treated is factor level ID integer
   x_not_logged<-x
->>>>>>> fdf717aa82dba3d2851cbc48c047cf0d30f7ce86
   x <- suppressWarnings(log(x))
   x_data_only <- hasdata(x)
   x_data_only_indices <- hasdata(x, return.index = T)
@@ -111,15 +81,9 @@ log.outliers.numerical <- function(x, maximum_standard_deviations = 3) {
   outliers_indices_in_original_vector <- x_data_only_indices[outliers_indices_in_data_only]
   return(
     cbind(
-<<<<<<< HEAD
-      index = outliers_indices_in_original_vector,
-      value = x_not_logged[outliers_indices_in_original_vector]
-    )
-  )
-=======
+
       index=outliers_indices_in_original_vector,
-      value=x_not_logged[outliers_indices_in_original_vector])%>% as.data.frame)
->>>>>>> fdf717aa82dba3d2851cbc48c047cf0d30f7ce86
+      value=x_not_logged[outliers_indices_in_original_vector]) %>% as.data.frame(stringsAsFactors=F))
 }
 
 

@@ -33,7 +33,7 @@ inspect_all_csv_in_dir <- function(source_dir = "./", pattern = "csv$", target_d
   # load files, run checks
 
   all_issues <- purrr::map(files, function(csvfile) {
-    df <- data.table::fread(file = csvfile)
+    df <- data.table::fread(file = paste0(source_dir,"/",csvfile))
 
     # skip files that didn't read correctly
     if (!is.data.frame(df)) {

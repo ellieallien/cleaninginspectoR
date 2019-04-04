@@ -1,24 +1,11 @@
 Package: cleaninginspectoR
-Title: simple data cleaning checks
+Title: Basic checks that data cleaning ocurred 
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Martin",
-           family = "Barner",
-           role = c("aut", "cre"),
-           email = "martin.barner@impact-initiatives.org")
-Description: simple data cleaning checks
-License: GPL-3
+    person("Eliora", "Henzler", role = "cre", "mai", email = "eliora.henzler@impact.initiatives.org"),
+    person("Martin", "Barner", role = "aut"))
+Imports: dplyr, reachR, reshape, knitr, tidyr, magrittr
+Description: This package checks that data cleaning ocurred according to IMPACT standards. It requires the user to upload the data, cleaning log, and fill out several parameters 
+License: What license it uses
 Encoding: UTF-8
 LazyData: true
-Suggests: 
-    testthat,
-    rmarkdown
-VignetteBuilder: knitr
-RoxygenNote: 6.1.1
-Depends: 
-    reshape,
-    questionr,
-    knitr,
-    dplyr,
-    tidyr,
-    magrittr

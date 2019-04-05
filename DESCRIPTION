@@ -19,6 +19,7 @@ Depends:
     dplyr
 Imports: 
     purrr,
+    questionr,
     data.table,
     assertthat,
     tidyr,

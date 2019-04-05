@@ -4,7 +4,7 @@
 \alias{find_outliers}
 \title{Find outliers in all numerical columns of a dataset}
 \usage{
-find_outliers(data, uuid.column.name)
+find_outliers(data)
 }
 \arguments{
 \item{data}{a dataframe}

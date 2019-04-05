@@ -4,7 +4,7 @@
 \alias{inspect_all}
 \title{Apply general data cleaning checks}
 \usage{
-inspect_all(df, uuid.column.name)
+inspect_all(df, uuid.column.name = NULL)
 }
 \arguments{
 \item{uuid.column.name}{optional: The name of the column containing the uuids. If none is provided, will seach variable names for "uuid".}

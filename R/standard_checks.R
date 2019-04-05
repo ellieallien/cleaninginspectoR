@@ -24,8 +24,8 @@ find_duplicates <- function(data, duplicate.column.name) {
 
     return(empty_issues_table())
   }
-  duplicate <- data.frame(uuid = data[[duplicate.column.name]][duplicate], index = duplicate, value = data[[duplicate.column.name]][duplicate],stringsAsFactors = F)
-  colnames(duplicate) <- c("uuid","index", "value")
+  duplicate <- data.frame(index = duplicate, value = data[[duplicate.column.name]][duplicate],stringsAsFactors = F)
+  colnames(duplicate) <- c("index", "value")
   duplicate <- data.frame(duplicate, variable = duplicate.column.name,
                      has_issue = T, issue_type = paste("duplicate in", duplicate.column.name),stringsAsFactors = F)
   as.data.frame(duplicate,stringsAsFactors = F)

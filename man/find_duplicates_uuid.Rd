@@ -21,7 +21,7 @@ This function uses the more generic `find_duplicates()` function, which you shou
 }
 \examples{
 # a test dataset with 1000 rows; one numeric variable and one id variable
-testdf<-data.frame(numeric_var=runif(10),unique_ids=c(1,2,3,4,5,6,7,8,1,3))
+testdf <- data.frame(numeric_var = runif(10), unique_ids = c(1, 2, 3, 4, 5, 6, 7, 8, 1, 3))
 # find duplicates in the unique_ids column:
 find_duplicates_uuid(data)
 }

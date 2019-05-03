@@ -9,7 +9,9 @@
 #' @examples
 #' inspect_all(my_df)
 #' @export
+
 inspect_all<-function(df,uuid.column.name = NULL){
+
 
   uuid.provided <- !is.null(uuid.column.name)
 
@@ -26,5 +28,10 @@ inspect_all<-function(df,uuid.column.name = NULL){
   issues <- do.call(rbind,issues)
 
 
+  rbind(
+    sensitive_columns(df, T),
+    duplicate_uuids,
+    find_outliers(df),
+    find_other_responses(df)
+  )
 }
-

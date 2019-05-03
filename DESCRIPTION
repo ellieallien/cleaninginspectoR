@@ -19,7 +19,10 @@ Depends:
     reshape,
     questionr,
     knitr,
-    dplyr,
+    dplyr
+Imports: 
+    purrr,
+    data.table,
     assertthat,
     tidyr,
     magrittr

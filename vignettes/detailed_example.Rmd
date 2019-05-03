@@ -28,6 +28,7 @@ These can all be accessed directly as individual functions, outlined below.
 
 ```{r, results='hide', message=FALSE,warning=FALSE,error=FALSE}
 library("cleaninginspectoR")
+library("knitr")
 ```
 
 ## Example data frame
@@ -78,11 +79,11 @@ run `?find_duplicates` or `?find_duplicates_uuid` for details.
 ## Checking for outliers
 
 ```{r,eval=F}
-find_outliers(testdf, "uuid"))
+find_outliers(testdf)
 ```
 
 ```{r,echo=F}
-knitr::kable(find_outliers(testdf, "uuid"))
+knitr::kable(find_outliers(testdf))
 ```
 
 Run `?find_outliers` for details

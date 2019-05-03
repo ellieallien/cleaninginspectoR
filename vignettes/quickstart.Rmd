@@ -20,8 +20,8 @@ knitr::opts_chunk$set(
 
 ```{r, results='hide', message=FALSE,warning=FALSE,error=FALSE}
 library("cleaninginspectoR")
+library("knitr")
 ```
-
 
 ## Example data frame
 

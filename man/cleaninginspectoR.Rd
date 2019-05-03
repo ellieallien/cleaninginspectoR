@@ -4,35 +4,33 @@
 \name{cleaninginspectoR}
 \alias{cleaninginspectoR}
 \alias{cleaninginspectoR-package}
-\title{Data Cleaning Checks}
+\title{Data Cleaning Checks
+rudimentary checks to flag potentially problematic values in a dataset}
 \description{
+Data Cleaning Checks
 rudimentary checks to flag potentially problematic values in a dataset
 }
 \details{
-\subsection{Functionality}
-\itemize{
-\item \code{inspect_all()}: applies all checks listed below
-\item \code{find_duplicates()} looks for duplicates in columns that should be unique
-\item \code{find_duplicates_uuid()} looks for a function containing "uuid" in the name and looks for duplicates
-\item \code{find_outliers()} looks for outliers in numerical columns
-\item \code{find_other_responses()} looks for values in potential "if other, specify.." type of columns
-}
+Functionality
 
-\subsection{Output}
+\code{inspect_all()}: applies all checks listed below
+\code{find_duplicates()} looks for duplicates in columns that should be unique
+\code{find_duplicates_uuid()} looks for a function containing "uuid" in the name and looks for duplicates
+\code{find_outliers()} looks for outliers in numerical columns
+\code{find_other_responses()} looks for values in potential "if other, specify.." type of columns
 
+Output
 The output has the same structure for all functions of this package:
-
 A data frame with the following columns:
 value	variable	has_issue	issue_type
-\itemize{
-\item \code{index}: the index of the row of the original data in which the issue occured.  (NA if applies to multiple rows)
-\item \code{value} the suspicious value
-\item \code{variable} The column containing the suspicious value
-\item \code{has_issue} logical TRUE/FALSE: currently always true, can be ignored.
-\item \code{issue_type} a description/name of the potential issue
-}
 
-\subsection{Limitations}
+\code{index}: the index of the row of the original data in which the issue occured.  (NA if applies to multiple rows)
+\code{value} the suspicious value
+\code{variable} The column containing the suspicious value
+\code{has_issue} logical TRUE/FALSE: currently always true, can be ignored.
+\code{issue_type} a description/name of the potential issue
+
+Limitations
 \enumerate{
 \item These checks are under no circumstances sufficient or complete in any way, and more context and data specific checks are always necessary.
 \item Any data protection related checks are \emph{rudimentary} at best and are under no circumstances sufficient to ensure data protection in any way

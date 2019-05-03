@@ -4,7 +4,7 @@
 \alias{inspect_all}
 \title{Apply general data cleaning checks}
 \usage{
-inspect_all(df, uuid.column.name)
+inspect_all(df, uuid.column.name = NULL)
 }
 \arguments{
 \item{uuid.column.name}{optional: The name of the column containing the uuids. If none is provided, will seach variable names for "uuid".}
@@ -18,7 +18,7 @@ A dataframe with one row per potential issue, containing the row index, value an
 Uses all other cleaning checks available in this package at once
 }
 \details{
-for details see `?cleaninginspectoR`
+for details see \code{?cleaninginspectoR}
 }
 \examples{
 inspect_all(my_df)

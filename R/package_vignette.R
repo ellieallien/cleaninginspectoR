@@ -8,8 +8,7 @@
 #'   \item `find_duplicates()` looks for duplicates in columns that should be unique
 #'   \item `find_duplicates_uuid()` looks for a function containing "uuid" in the name and looks for duplicates
 #'   \item `find_outliers()` looks for outliers in numerical columns
-#'   \item `find_other_responses()` looks for values in potential "if other, specify.." type of columns
-#' }
+#'   \item `find_other_responses()` looks for values in potential "if other, specify.." type of columns}
 #'
 #' \subsection{Output}
 #'
@@ -22,8 +21,7 @@
 #'   \item `value` the suspicious value
 #'   \item `variable` The column containing the suspicious value
 #'   \item `has_issue` logical TRUE/FALSE: currently always true, can be ignored.
-#'   \item `issue_type` a description/name of the potential issue
-#' }
+#'   \item `issue_type` a description/name of the potential issue}
 #'
 #' \subsection{Limitations}
 #'

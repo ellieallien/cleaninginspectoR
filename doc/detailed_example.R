@@ -1,3 +1,7 @@
+vignette: >
+  %\VignetteIndexEntry{Integrating TCGA Data}
+%\VignetteEngine{knitr::rmarkdown}
+
 ## ----setup, include = FALSE----------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,

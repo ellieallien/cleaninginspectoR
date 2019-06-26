@@ -123,9 +123,9 @@ find_other_responses <- function (data)
 
   if(ncol(counts) == 0){return(empty_issues_table())}else{
   #%>% extract(.,colSums(!is.na(.))<nrow(.))
-  counts %<>% filter(!is.na(value)) %>% filter(!value %in% c("", TRUE, FALSE, 1, 0, "VRAI", "FAUX", "TRUE", "FALSE", "<NA>", "NA"))
+  counts %<>% dplyr::filter(!is.na(value)) %>% dplyr::filter(!value %in% c("", TRUE, FALSE, 1, 0, "VRAI", "FAUX", "TRUE", "FALSE", "<NA>", "NA"))
 
-  counts %<>% group_by(key,value) %>% summarise(count=length(value)) %>% filter(!is.na(value))
+  counts %<>% dplyr::group_by(key,value) %>% summarise(count=length(value)) %>% dplyr::filter(!is.na(value))
     #summarise_all(funs(sum, na.rm = T))
 
   others <- counts %>% as.data.frame
@@ -134,7 +134,7 @@ find_other_responses <- function (data)
     return(empty_issues_table())
   }
 
-  others <- others %>% mutate(value = paste0(value," /// instances: ",count)) %>% select(variable = key,value)
+  others <- others %>% dplyr::mutate(value = paste0(value," /// instances: ",count)) %>% dplyr::select(variable = key,value)
 
   others <- data.frame(index = NA, others[, c("value", "variable")],
                        has_issue = T, issue_type = "'other' response. may need recoding.", stringsAsFactors = F)

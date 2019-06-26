@@ -3,7 +3,6 @@
 #'
 #'
 #'
-#'
 #' Functionality
 #'
 #'  `inspect_all()`: applies all checks listed below

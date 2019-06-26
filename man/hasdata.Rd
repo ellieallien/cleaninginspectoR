@@ -19,6 +19,3 @@ returns the values of the input vector that contain valid data
 has data
 removes NA, empty strings and non-finite values from a vector
 }
-\seealso{
-\code{\link{}}
-}

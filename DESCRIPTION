@@ -1,13 +1,11 @@
 Package: cleaninginspectoR
-Title: simple data cleaning checks
+Title: Basic checks that data cleaning ocurred 
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "Martin",
-           family = "Barner",
-           role = c("aut", "cre"),
-           email = "martin.barner@impact-initiatives.org")
-Description: simple data cleaning checks
-License: GPL-3
+Authors@R: c(
+    person("Eliora", "Henzler", role = c("cre", "aut"), email = "eliora.henzler@impact.initiatives.org"),
+    person("Martin", "Barner", role = "aut"))
+Description: This package checks that data cleaning ocurred according to IMPACT standards. It requires the user to upload the data, cleaning log, and fill out several parameters 
+License: What license it uses
 Encoding: UTF-8
 LazyData: true
 Suggests: 
@@ -18,11 +16,11 @@ RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Depends: 
     reshape,
-    questionr,
     knitr,
     dplyr
 Imports: 
     purrr,
+    questionr,
     data.table,
     assertthat,
     tidyr,

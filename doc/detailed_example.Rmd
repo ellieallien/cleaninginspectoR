@@ -1,10 +1,10 @@
 ---
-title: "Detailed Example"
+title: "Exemple détaillé"
 author: "Eliora Henzler"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Detailed Example}
+  %\VignetteIndexEntry{Integrating TCGA Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,12 +17,12 @@ knitr::opts_chunk$set(
 ```
 
 
-# Specific test functions
+# Les fonctions particulieres au nettoyage 
 
-## what is "all" in inspect_all?
+## Qu'est-ce que le "all" dans inspect_all ? 
 
-`inspect_all()` wraps a number of specific data cleaning checks.
-These can all be accessed directly as individual functions, outlined below.
+`inspect_all()` est compose de plusieurs checks de nettoyage de donnéées.
+Ceux-ci peuvent etre accedes directement, comme démontré ci-bas
 
 ## Load the cleaninginspectoR Package
 

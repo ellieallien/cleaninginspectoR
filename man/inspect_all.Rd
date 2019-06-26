@@ -18,7 +18,7 @@ A dataframe with one row per potential issue, containing the row index, value an
 Uses all other cleaning checks available in this package at once
 }
 \details{
-for details see `?cleaninginspectoR`
+for details see \code{?cleaninginspectoR}
 }
 \examples{
 inspect_all(my_df)

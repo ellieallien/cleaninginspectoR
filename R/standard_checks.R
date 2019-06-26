@@ -71,7 +71,9 @@ find_duplicates_uuid <- function(data) {
 #' If fewer outliers are found when the data is log-transformed before the check, only outliers in the log-transformed data are returned.
 #' @return A dataframe with one row per potential issue. It has columns for the corresponding row index in the original data; the suspicious value; the variable name in the original dataset in which the suspicious value occured; A description of the issue type.
 #' @export
+
 find_outliers <- function(data) {
+
   ## calculate both normal and log normal outliers for the whole dataframe
   outliers_normal <- data %>% data_validation_outliers_normal()
   outliers_log_normal <- data %>% data_validation_outliers_log_normal()
@@ -84,6 +86,7 @@ find_outliers <- function(data) {
     else if (nrow(outliers_log_normal[[x]]) < nrow(outliers_normal[[x]])) { ## for each variable, select the method with fewer outliers
 
       data.frame(outliers_log_normal[[x]],
+
         variable = rep(x, nrow(outliers_log_normal[[x]])), # rep(...,nrow()) makes this work for no rows etc.
         has_issue = rep(T, nrow(outliers_log_normal[[x]])),
         issue_type = rep("log normal distribution outlier", nrow(outliers_log_normal[[x]])), stringsAsFactors = F
@@ -120,9 +123,9 @@ find_other_responses <- function (data)
 
   if(ncol(counts) == 0){return(empty_issues_table())}else{
   #%>% extract(.,colSums(!is.na(.))<nrow(.))
-  counts %<>% filter(!is.na(value)) %>% filter(!value %in% c("", TRUE, FALSE, 1, 0, "VRAI", "FAUX", "TRUE", "FALSE", "<NA>", "NA"))
+  counts %<>% dplyr::filter(!is.na(value)) %>% dplyr::filter(!value %in% c("", TRUE, FALSE, 1, 0, "VRAI", "FAUX", "TRUE", "FALSE", "<NA>", "NA"))
 
-  counts %<>% group_by(key,value) %>% summarise(count=length(value)) %>% filter(!is.na(value))
+  counts %<>% dplyr::group_by(key,value) %>% summarise(count=length(value)) %>% dplyr::filter(!is.na(value))
     #summarise_all(funs(sum, na.rm = T))
 
   others <- counts %>% as.data.frame
@@ -131,7 +134,7 @@ find_other_responses <- function (data)
     return(empty_issues_table())
   }
 
-  others <- others %>% mutate(value = paste0(value," /// instances: ",count)) %>% select(variable = key,value)
+  others <- others %>% dplyr::mutate(value = paste0(value," /// instances: ",count)) %>% dplyr::select(variable = key,value)
 
   others <- data.frame(index = NA, others[, c("value", "variable")],
                        has_issue = T, issue_type = "'other' response. may need recoding.", stringsAsFactors = F)

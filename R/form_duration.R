@@ -1,3 +1,6 @@
+#' Check kobo interview time
+#'
+#'
 #'@param data Dataframe with "start" and "end" columns.
 #'@param duration_threshold_lower Minimum number of minutes to complete the form
 #'@param duration_threshold_upper Maximum number of minutes to complete the form

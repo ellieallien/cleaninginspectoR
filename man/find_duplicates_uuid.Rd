@@ -17,7 +17,7 @@ Search UUID column, then find duplicates / non-unique values in it
 }
 \details{
 searches for "uuid" (not case sensitive) in the variable names. Identifies duplicate values in the first variable that matches the search.
-This function uses the more generic `find_duplicates()` function, which you should use if your id column doesn't contain "uuid"
+This function uses the more generic \code{find_duplicates()} function, which you should use if your id column doesn't contain "uuid"
 }
 \examples{
 # a test dataset with 1000 rows; one numeric variable and one id variable

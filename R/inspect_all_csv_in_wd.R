@@ -9,10 +9,10 @@
 inspect_all_csv_in_dir <- function(source_dir = "./", pattern = "csv$", target_dir = "./", recursive = TRUE) {
 
   # fail if.. wrong input types
-  assert_that(is.string(source_dir))
-  assert_that(is.string(pattern))
-  assert_that(is.string(target_dir))
-  assert_that(is.flag(recursive))
+  assertthat::assert_that(is.string(source_dir))
+  assertthat::assert_that(is.string(pattern))
+  assertthat::assert_that(is.string(target_dir))
+  assertthat::assert_that(is.flag(recursive))
 
   # fail if.. directories not found
   if (!dir.exists(source_dir)) {

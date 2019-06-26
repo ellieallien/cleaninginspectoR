@@ -5,14 +5,13 @@
 #' @param write.to.csv logical: whether or not to write csv files with the issue tables to files (folder can be specified with target_dir)
 #' @param target_folder path to the folder where the issue tables should be saved
 #' @return a list of data frames with the outputs from each csv file in the current working directory (and subdirectories)#
-#'
 inspect_all_in_folder <- function(source_dir = "./", pattern = "csv$", recursive = TRUE,write.to.csv=FALSE,target_dir = "./") {
 
   # fail if.. wrong input types
-  assert_that(is.string(source_dir))
-  assert_that(is.string(pattern))
-  assert_that(is.string(target_dir))
-  assert_that(is.flag(recursive))
+  assertthat::assert_that(is.string(source_dir))
+  assertthat::assert_that(is.string(pattern))
+  assertthat::assert_that(is.string(target_dir))
+  assertthat::assert_that(is.flag(recursive))
 
   # fail if.. directories not found
   if (!dir.exists(source_dir)) {

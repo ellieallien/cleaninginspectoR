@@ -28,6 +28,7 @@ Ceux-ci peuvent etre accedes directement, comme démontré ci-bas
 
 ```{r, results='hide', message=FALSE,warning=FALSE,error=FALSE}
 library("cleaninginspectoR")
+library("knitr")
 ```
 
 ## Example data frame

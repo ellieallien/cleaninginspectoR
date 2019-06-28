@@ -4,11 +4,9 @@
 \name{cleaninginspectoR}
 \alias{cleaninginspectoR}
 \alias{cleaninginspectoR-package}
-\title{Data Cleaning Checks
-rudimentary checks to flag potentially problematic values in a dataset}
+\title{Rudimentary checks to flag potentially problematic values in a dataset}
 \description{
-Data Cleaning Checks
-rudimentary checks to flag potentially problematic values in a dataset
+Rudimentary checks to flag potentially problematic values in a dataset
 }
 \details{
 Functionality
@@ -32,7 +30,7 @@ value	variable	has_issue	issue_type
 
 Limitations
 \enumerate{
-\item These checks are under no circumstances sufficient or complete in any way, and more context and data specific checks are always necessary.
+\item These checks are under no circumstances sufficient or complete: more context and data specific checks are always necessary.
 \item Any data protection related checks are \emph{rudimentary} at best and are under no circumstances sufficient to ensure data protection in any way
 \item Although tempting, this package should \emph{never} be used to automatically remove any flagged values without double checking them manually. This would seriously skew your dataset, and make uncertainty estimates invalid. Potential issues must be investigated on a case by case basis.
 }

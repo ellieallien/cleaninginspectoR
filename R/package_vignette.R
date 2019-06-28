@@ -1,5 +1,4 @@
-#' Data Cleaning Checks
-#' rudimentary checks to flag potentially problematic values in a dataset
+#' Rudimentary checks to flag potentially problematic values in a dataset
 #'
 #'
 #'
@@ -23,7 +22,7 @@
 #'  `issue_type` a description/name of the potential issue
 #'
 #'  Limitations
-#' 1. These checks are under no circumstances sufficient or complete in any way, and more context and data specific checks are always necessary.
+#' 1. These checks are under no circumstances sufficient or complete: more context and data specific checks are always necessary.
 #' 2. Any data protection related checks are _rudimentary_ at best and are under no circumstances sufficient to ensure data protection in any way
 #' 3. Although tempting, this package should _never_ be used to automatically remove any flagged values without double checking them manually. This would seriously skew your dataset, and make uncertainty estimates invalid. Potential issues must be investigated on a case by case basis.
 #' @docType package

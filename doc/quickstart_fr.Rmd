@@ -1,0 +1,72 @@
+---
+title: "Quickstart"
+author: "Eliora H"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quickstart}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Charger l'outil cleaninginspectoR
+
+```{r, results='hide', message=FALSE,warning=FALSE,error=FALSE}
+library("cleaninginspectoR")
+```
+
+## Données exemple
+
+Voici des données que nous utiliserons comme exemple
+Elles n'ont pas d'importance, nous les gardons juste ici pour que vous puissiez 
+Ces donnees contiennent
+
+- variable `a`: valeurs et valeurs extremes 
+- variable `uuid`: valeurs devraient etre uniques mais ne le sont pas 
+- variable `source.eau.autre`: tous des NA sauf deux
+- variable `GPS.lat` juste des chiffres mais le nom de la colonne indique qu'il pourrait s'agir de donnees delicates
+
+
+```{r}
+testdf <- data.frame(a= c(runif(98),7287,-100),
+                   b=sample(letters,100,T),
+                   uuid=c(1:98, 4,20),
+                   source.eau.autre = c(rep(NA,98),"chez les voisins","chez les voisins"),
+                   GPS.lat = runif(100))
+```
+
+
+## Tous les vérifications automatiques d'un coup
+
+La fonction `inspect_all` génère d'un coup toutes les 
+
+```{r,eval=F}
+inspect_all(testdf, uuid.column.name = "uuid")
+```
+```{r,eval=T,echo=F}
+kable(inspect_all(testdf, uuid.column.name = "uuid"))
+```
+
+## Pour les colonnes de "uuid" avec un nom etrange
+
+Une des choses que `inspect_all` fait, c'est chercher des duplications dans la premiere colonne qui contient le mot "uuid". Si la colonne content les identifiants est differente, il est possible de specifier son nom.
+
+```{r,eval=F}
+inspect_all(df = testdf, uuid.column.name = "b")
+```
+
+```{r,eval=T}
+kable(inspect_all(df = testdf, uuid.column.name = "b"))
+```
+
+
+## Pour plus de details
+
+Pour plus de details, voir l'exemple detaille [exemple detaille](detailed_example.html).

@@ -1,0 +1,114 @@
+---
+title: "Detailed Example"
+author: "Eliora Henzler"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Integrating TCGA Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Des fonctions specifiques pour tester 
+
+## Qu'est-ce que le "all" dans inspect_all?
+
+`inspect_all()` comprend plusieurs test de donnees specifiques
+Celles-ci peuvent etre  acceedees individuellement par les fonctions ci-dessous.
+
+## Charger l'outil cleaninginspectoR
+
+```{r, results='hide', message=FALSE,warning=FALSE,error=FALSE}
+library("cleaninginspectoR")
+```
+
+## Donnees exemple
+
+Voici des donnees que nous utiliserons comme exemple
+Elles n'ont pas d'importance, nous les gardons juste ici pour que vous puissiez 
+Ces donnees contiennent
+
+- variable `a`: valeurs et valeurs extremes 
+- variable `uuid`: valeurs devraient etre uniques mais ne le sont pas 
+- variable `source.eau.autre`: tous des NA sauf deux
+- variable `GPS.lat` juste des chiffres mais le nom de la colonne indique qu'il pourrait s'agir de donnees delicates
+- variable `start`le temps du debut de l'enquete
+- variable `end`le temps du debut de l'enquete
+
+
+```{r}
+testdf <- read.csv("./testdf.csv")
+
+testdf %>% str
+```
+
+## Trouver et remplacer les valeurs repetees dans certaines colonnes
+
+Il y a une colonne qui repere les valeurs repetees qui devraient etre uniques
+
+```{r,eval=F}
+find_duplicates(testdf, duplicate.column.name = "uuid")
+```
+
+```{r,echo=F}
+knitr::kable(find_duplicates(testdf, duplicate.column.name = "uuid"))
+```
+
+Comme celle-ci s'utilise le plus souvent avec une colonne qui contient des UUIDs, il y a une fonction qui cherche directement pour ces lettres la. Elle fonctionne exactement comme celle d'au dessus.
+
+```{r,eval=F}
+find_duplicates_uuid(testdf)
+```
+
+```{r,echo=F}
+knitr::kable(find_duplicates_uuid(testdf))
+```
+
+executez les lignes `?find_duplicates` ou `?find_duplicates_uuid` pour les details en anglais. 
+
+## Identifier les valeurs extremes 
+
+```{r,eval=F}
+find_outliers(testdf)
+```
+
+```{r,echo=F}
+knitr::kable(find_outliers(testdf))
+```
+
+Executez `?find_outliers` pour les details en anglais. 
+
+## Identifier les reponses "autres"
+
+```{r,eval=F}
+find_other_responses(testdf)
+```
+
+```{r,echo=F}
+knitr::kable(find_other_responses(testdf))
+
+```
+
+Executez `?find_other_responses` pour les details en anglais
+
+## Identifier les entretiens trop longs ou trop courts
+
+```{r,eval=F}
+check_time(testdf, duration_threshold_lower = 15, duration_threshold_upper = 100)
+```
+
+```{r,echo=F}
+knitr::kable(find_other_responses(testdf))
+
+```
+
+Executez `?find_other_responses` pour les details en anglais
+

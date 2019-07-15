@@ -3,8 +3,10 @@ select_other_columns <- function(data) {
   othernames <- grep("other$|Other$|autre$|Autre$", names(data),
     value = T
   )
-  data[Othernames]
+  data[othernames]
 }
+
+
 
 empty_issues_table <- function() {
   data.frame(

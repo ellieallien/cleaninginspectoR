@@ -114,7 +114,7 @@ find_outliers <- function(data) {
 #' @export
 find_other_responses <- function (data)
 {
-  counts <- data %>% select_other_columns
+  counts<-data %>% select_other_columns
   if(ncol(counts) == 0){return(empty_issues_table())}
   counts <- counts %>% (tidyr::gather)
 

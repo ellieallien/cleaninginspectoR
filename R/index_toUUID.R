@@ -7,7 +7,7 @@
 #' @details Matches indices from cleaninginspectoR results with the UUIDs present in the data.
 #' @return A dataframe with the cleaninginspectoR results and an additional UUID column.
 #' @export
-find_outliers <- function(inspectorResult, data, uuid.column.name = "uuid") {
+index_toUUID <- function(inspectorResult, data, uuid.column.name = "uuid") {
 
   if(any(!names(inspectorResult) %in% c("index","value","variable","has_issue","issue_type"))){
     extra_cols <- names(inspectorResult)[!names(inspectorResult) %in% c("index","value","variable","has_issue","issue_type")]

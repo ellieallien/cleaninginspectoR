@@ -28,10 +28,17 @@ inspect_all<-function(df,uuid.column.name = NULL){
   issues <- do.call(rbind,issues)
 
 
-  rbind(
+  final_output <- rbind(
     sensitive_columns(df, T),
     duplicate_uuids,
     find_outliers(df),
     find_other_responses(df)
   )
+
+  if(!uuid.provided){
+    return(final_output)
+  }else{
+    final_output%>%
+      index_toUUID(df, uuid.column.name = uuid.column.name)
+  }
 }

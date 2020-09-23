@@ -4,8 +4,7 @@
 \alias{check_time}
 \title{Check kobo interview time}
 \usage{
-check_time(data, duration_threshold_lower = 15,
-  duration_threshold_upper = 100)
+check_time(data, duration_threshold_lower = 15, duration_threshold_upper = 100)
 }
 \arguments{
 \item{data}{Dataframe with "start" and "end" columns.}

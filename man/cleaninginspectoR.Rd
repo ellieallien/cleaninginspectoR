@@ -3,11 +3,7 @@
 \docType{package}
 \name{cleaninginspectoR}
 \alias{cleaninginspectoR}
-\alias{cleaninginspectoR-package}
 \title{Rudimentary checks to flag potentially problematic values in a dataset}
-\description{
-Rudimentary checks to flag potentially problematic values in a dataset
-}
 \details{
 Functionality
 

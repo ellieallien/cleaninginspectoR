@@ -4,8 +4,13 @@
 \alias{inspect_all_in_folder}
 \title{run inspect_all() on all csv files in a folder and subfolders}
 \usage{
-inspect_all_in_folder(source_dir = "./", pattern = "csv$",
-  recursive = TRUE, write.to.csv = FALSE, target_dir = "./")
+inspect_all_in_folder(
+  source_dir = "./",
+  pattern = "csv$",
+  recursive = TRUE,
+  write.to.csv = FALSE,
+  target_dir = "./"
+)
 }
 \arguments{
 \item{source_dir}{folder to search for csv files that inspect_all() should be run on}
